@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExitControls : MonoBehaviour
@@ -8,6 +6,17 @@ public class ExitControls : MonoBehaviour
     public GameObject UnlockedExit;
 
     public GameObject ShinyExit;
+
+    private void OnEnable()
+    {
+        GlobalEvents.OnPlayerClearedTheRoom += UnlockExit;
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.OnPlayerClearedTheRoom -= UnlockExit;
+    }
+
 
     public void UnlockExit()
     {

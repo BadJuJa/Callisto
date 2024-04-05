@@ -20,14 +20,14 @@ public class PlayerCombat : MonoBehaviour {
 
     private void OnEnable()
     {
-        GlobalEvents.Event_OnSwitchToAttackType += SwitchAttackType;
-        GlobalEvents.Event_OnPlayerAttacked += Attack;
+        GlobalEvents.OnSwitchToAttackType += SwitchAttackType;
+        GlobalEvents.OnPlayerAttacked += Attack;
     }
 
     private void OnDisable()
     {
-        GlobalEvents.Event_OnSwitchToAttackType -= SwitchAttackType;
-        GlobalEvents.Event_OnPlayerAttacked -= Attack;
+        GlobalEvents.OnSwitchToAttackType -= SwitchAttackType;
+        GlobalEvents.OnPlayerAttacked -= Attack;
     }
 
     private void Awake()

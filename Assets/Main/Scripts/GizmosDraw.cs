@@ -16,6 +16,6 @@ public class GizmosDraw : MonoBehaviour
         if (!_input) return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + _input.LookInputVector3D.ToIso());
+        Gizmos.DrawLine(transform.position, transform.position + _input.LookInputVector3D.ToRotation());
     }
 }

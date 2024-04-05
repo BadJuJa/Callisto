@@ -1,34 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAnimatorController : MonoBehaviour
 {
-    private Rigidbody _rb;
+    private NavMeshAgent _agent;
 
     private Animator _animator;
 
-    private EnemyCentral _central;
+    private EnemyAttack _central;
 
     int velocityParamHash = Animator.StringToHash("Velocity");
     int attackTriggerParamHash = Animator.StringToHash("AttackTrigger");
 
     private void Start()
     {
-        _rb = GetComponentInParent<Rigidbody>();
+        _agent = GetComponentInParent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _central = GetComponentInParent<EnemyCentral>();
+        _central = GetComponentInParent<EnemyAttack>();
 
     }
 
     private void LateUpdate()
     {
-        _animator.SetFloat(velocityParamHash, _rb.velocity.magnitude);
+        _animator.SetFloat(velocityParamHash, _agent.velocity.magnitude);
     }
 
     public void TriggerAttack()
     {
-        print("Attack Triggered");
         _animator.SetTrigger(attackTriggerParamHash);
     }
 

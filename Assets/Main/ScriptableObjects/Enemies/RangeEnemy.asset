@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: RangeEnemy
   m_EditorClassIdentifier: 
   Prefab: {fileID: 5557279390079599381, guid: 904e7fc4e1f0b7f49ba88f7392d102aa, type: 3}
-  AttackRange: 6
+  AttackRange: 10
   Damage: 10
   Health: 80
   AttackCooldown: 2
   MovementSpeed: 7
   EnemyType: 1
+  PlayerInReach: 0

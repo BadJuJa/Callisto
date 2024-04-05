@@ -18,14 +18,14 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GlobalEvents.Event_OnPlayerExitedRoom += Proceed_p1;
-        GlobalEvents.Event_OnScreenFadeOutFinished += Proceed_p2;
+        GlobalEvents.OnPlayerExitedRoom += Proceed_p1;
+        GlobalEvents.OnScreenFadeOutFinished += Proceed_p2;
     }
 
     private void OnDisable()
     {
-        GlobalEvents.Event_OnPlayerExitedRoom -= Proceed_p1;
-        GlobalEvents.Event_OnScreenFadeOutFinished -= Proceed_p2;
+        GlobalEvents.OnPlayerExitedRoom -= Proceed_p1;
+        GlobalEvents.OnScreenFadeOutFinished -= Proceed_p2;
     }
 
 
@@ -40,8 +40,6 @@ public class LevelManager : MonoBehaviour
     }
 
     private void Proceed_p2 () {
-        // Заспавнить комнату
-        
         SpawnNewRoom();
         
         if (currentRoom.TryGetComponent(out RoomControls controls))
@@ -52,10 +50,8 @@ public class LevelManager : MonoBehaviour
             roomPlayerSpawnpoint = controls2.playerSpawnPoint.position;
         }
 
-        // Переместить игрока
         PlayerTransform.position = roomPlayerSpawnpoint;
         
-        // Уничтожить предыдущую комнату
         Destroy(previousRoom);
 
         PlayerTransform.gameObject.SetActive(true);
@@ -63,11 +59,12 @@ public class LevelManager : MonoBehaviour
         IEnumerator _()
         {
             yield return new WaitForSeconds(.5f);
-            // Разтемнить экран
             FadeIn();
         }
 
         StartCoroutine(_());
+
+        GlobalEvents.Send_PlayerEnteredLevel();
     }
 
     private GameObject GetRandomRoom()

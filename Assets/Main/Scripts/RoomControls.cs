@@ -10,9 +10,26 @@ public class RoomControls : MonoBehaviour {
     public float timeBetweenSpawns = 2f;
     public Transform Enemies;
 
-    public ExitControls exitControls;
+    public BoxCollider CameraConfinderCollider;
 
     private Camera playerCamera;
+
+    private void Awake()
+    {
+        if (CameraConfinderCollider != null)
+        {
+            GlobalEvents.OnPlayerEnteredLevel += () => GlobalEvents.Send_OnNewCameraConfinderColliderAvailable(CameraConfinderCollider);
+        }
+        
+    }
+    private void OnEnable()
+    {
+        
+    }
+    private void OnDisable()
+    {
+        GlobalEvents.OnPlayerEnteredLevel -= () => GlobalEvents.Send_OnNewCameraConfinderColliderAvailable(CameraConfinderCollider);
+    }
 
     private void Start()
     {
@@ -57,7 +74,7 @@ public class RoomControls : MonoBehaviour {
         {
             if (Enemies.childCount < 1)
             {
-                exitControls.UnlockExit();
+                GlobalEvents.Send_OnPlayerClearedTheRoom();
                 break;
             }
             yield return new WaitForSeconds(.5f);

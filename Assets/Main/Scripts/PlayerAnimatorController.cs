@@ -13,7 +13,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private Vector2 _animationDirection = new();
     private void OnEnable()
     {
-        GlobalEvents.Event_OnPlayerAttacked += () =>
+        GlobalEvents.OnPlayerAttacked += () =>
         {
             stopAnimation = true;
         };
@@ -21,7 +21,7 @@ public class PlayerAnimatorController : MonoBehaviour
 
     private void OnDisable()
     {
-        GlobalEvents.Event_OnPlayerAttacked -= () =>
+        GlobalEvents.OnPlayerAttacked -= () =>
         {
             stopAnimation = true;
         }; 

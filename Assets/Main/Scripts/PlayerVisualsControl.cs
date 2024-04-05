@@ -12,12 +12,12 @@ public class PlayerVisualsControl : MonoBehaviour {
 
     private void OnEnable()
     {
-        GlobalEvents.Event_OnPlayerChangedAttackType += UpdateAttackFillTime;
+        GlobalEvents.OnPlayerChangedAttackType += UpdateAttackFillTime;
     }
 
     private void OnDisable()
     {
-        GlobalEvents.Event_OnPlayerChangedAttackType -= UpdateAttackFillTime;
+        GlobalEvents.OnPlayerChangedAttackType -= UpdateAttackFillTime;
     }
 
     private void Update()

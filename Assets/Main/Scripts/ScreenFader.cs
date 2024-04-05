@@ -14,14 +14,14 @@ public class ScreenFader : MonoBehaviour
 
     private void OnEnable()
     {
-        GlobalEvents.Event_OnScreenFadeInStarted += FadeIn;
-        GlobalEvents.Event_OnScreenFadeOutStarted += FadeOut;
+        GlobalEvents.OnScreenFadeInStarted += FadeIn;
+        GlobalEvents.OnScreenFadeOutStarted += FadeOut;
     }
 
     private void OnDisable()
     {
-        GlobalEvents.Event_OnScreenFadeInStarted += FadeIn;
-        GlobalEvents.Event_OnScreenFadeOutStarted += FadeOut;
+        GlobalEvents.OnScreenFadeInStarted += FadeIn;
+        GlobalEvents.OnScreenFadeOutStarted += FadeOut;
     }
 
     private void FadeIn()

@@ -80,6 +80,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6108862581027956974, guid: 624729c24a5f8264cbf5fa696e1fd24a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5b8435e07d5af3a4eb92bc8aa117a8c3, type: 2}
+    - target: {fileID: 6108862581027956974, guid: 624729c24a5f8264cbf5fa696e1fd24a, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: db8cffb907c45374c8610a5ada905942, type: 2}
     - target: {fileID: 7124686620059492745, guid: 624729c24a5f8264cbf5fa696e1fd24a, type: 3}
       propertyPath: m_Name
       value: Wall Variation 007

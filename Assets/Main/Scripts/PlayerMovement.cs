@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour {
         if (_input.MoveInputVector != Vector2.zero)
         {
             float correct_speed = _movementSpeed / _input.MoveInputVector3D.magnitude * Time.deltaTime;
-            _finalMovementVector = transform.position + correct_speed * _input.MoveInputVector3D.ToIso();
+            _finalMovementVector = transform.position + correct_speed * _input.MoveInputVector3D.ToRotation();
         }
         
         Look();
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (_input.LookInputVector == Vector2.zero && _input.MoveInputVector == Vector2.zero) return;
         
-        var desiredInput = _input.LookInputVector == Vector2.zero ? _input.MoveInputVector3D.ToIso() : _input.LookInputVector3D.ToIso();
+        var desiredInput = _input.LookInputVector == Vector2.zero ? _input.MoveInputVector3D.ToRotation() : _input.LookInputVector3D.ToRotation();
         
         var relative = (transform.position + desiredInput) - transform.position;
         var rot = Quaternion.LookRotation(relative, Vector3.up);

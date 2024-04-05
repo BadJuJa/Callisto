@@ -5,6 +5,7 @@ public class EnemyData : ScriptableObject {
 
     [Header("Prefab Settings")]
     public GameObject Prefab;
+    public GameObject AttackProjectilePrefab;
 
     [Header("Combat Settings")]
     public float AttackRange;
