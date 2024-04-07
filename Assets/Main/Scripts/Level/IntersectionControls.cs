@@ -1,9 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IntersectionControls : MonoBehaviour
+public class IntersectionControls : MonoBehaviour, IGeneralRoomControl 
 {
     public Transform playerSpawnPoint;
-    // public Transform VendorSpawnPoint;
+
+    public Transform UpgradeSpawnPosition;
+    public GameObject UpgradePrefab;
+
+    public Transform PlayerSpawnPoint => playerSpawnPoint;
+
+    public void SpawnUpgrade()
+    {
+        if (UpgradePrefab != null)
+        {
+            Instantiate(UpgradePrefab, position: UpgradeSpawnPosition.position, Quaternion.identity);
+        }
+    }
 }

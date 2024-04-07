@@ -20,3 +20,4 @@ MonoBehaviour:
   AttackCooldown: 2
   MovementSpeed: 6
   EnemyType: 0
+  ExperienceReward: 25

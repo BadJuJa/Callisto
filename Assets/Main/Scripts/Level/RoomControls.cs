@@ -1,12 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomControls : MonoBehaviour {
+[Serializable]
+public class RoomEnemiesList {
+    public EnemyData Data;
+    public int Amount;
+}
+
+public class RoomControls : MonoBehaviour, IGeneralRoomControl {
     public GameObject enemyPrefab;
     public Transform playerSpawnPoint;
     public List<Transform> spawnPoints;
-    public int enemiesToSpawn = 5;
+    public List<RoomEnemiesList> enemiesToSpawn = new();
     public float timeBetweenSpawns = 2f;
     public Transform Enemies;
 
@@ -14,17 +21,14 @@ public class RoomControls : MonoBehaviour {
 
     private Camera playerCamera;
 
-    private void Awake()
+    public Transform PlayerSpawnPoint => playerSpawnPoint;
+
+    private void OnEnable()
     {
         if (CameraConfinderCollider != null)
         {
             GlobalEvents.OnPlayerEnteredLevel += () => GlobalEvents.Send_OnNewCameraConfinderColliderAvailable(CameraConfinderCollider);
         }
-        
-    }
-    private void OnEnable()
-    {
-        
     }
     private void OnDisable()
     {
@@ -34,25 +38,16 @@ public class RoomControls : MonoBehaviour {
     private void Start()
     {
         playerCamera = Camera.main;
-        StartCoroutine(WaitUntilSpawnEnemies(5f));
+        StartCoroutine(WaitUntilSpawnEnemies(2f));
     }
 
-    private IEnumerator SpawnEnemies()
+    private void SpawnEnemies()
     {
-        List<Transform> validSpawnPoints = new List<Transform>(spawnPoints);
-
-        for (int i = 0; i < enemiesToSpawn; i++)
+        foreach(var enemy in enemiesToSpawn)
         {
-            int index = Random.Range(0, validSpawnPoints.Count);
-            Transform spawnPoint = validSpawnPoints[index];
-
-            if (!IsInView(spawnPoint.position))
-            {
-                Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, Enemies);
-            }
-
-            yield return new WaitForSeconds(timeBetweenSpawns);
+            StartCoroutine(SpawnEnemyType(enemy));
         }
+
         StartCoroutine(CheckEnemyCount());
     }
 
@@ -65,7 +60,7 @@ public class RoomControls : MonoBehaviour {
     private IEnumerator WaitUntilSpawnEnemies(float value)
     {
         yield return new WaitForSeconds(value);
-        StartCoroutine(SpawnEnemies());
+        SpawnEnemies();
     }
 
     private IEnumerator CheckEnemyCount()
@@ -80,4 +75,29 @@ public class RoomControls : MonoBehaviour {
             yield return new WaitForSeconds(.5f);
         }
     }
+
+    private IEnumerator SpawnEnemyType(RoomEnemiesList enemy)
+    {
+        List<Transform> validSpawnPoints = new List<Transform>(spawnPoints);
+        int spawned = 0;
+        while (spawned < enemy.Amount)
+        {
+            for (int i = 0; i < enemy.Amount-spawned; i++)
+            {
+                int index = UnityEngine.Random.Range(0, validSpawnPoints.Count);
+                Transform spawnPoint = validSpawnPoints[index];
+
+                if (!IsInView(spawnPoint.position))
+                {
+                    var go = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, Enemies);
+                    go.GetComponent<EnemyCentral>().Initialize(enemy.Data);
+                    spawned++;
+                }
+
+                yield return new WaitForSeconds(timeBetweenSpawns);
+            }
+        }
+    }
+
+    public void SpawnUpgrade() { }
 }

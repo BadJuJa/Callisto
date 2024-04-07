@@ -6,58 +6,58 @@ public enum EnemyTypes {
     Range,
 }
 
-
 public class EnemyCentral : MonoBehaviour, IDamagable, IEnemyCentral {
 
     [Header("References")]
-    public EnemyData Data;
+    private EnemyData _data;
+    public EnemyHealthBar healthBar;
 
     [Header("General")]
     private float _maxHealth;
     private float _health;
 
+    private bool _isInitialized = false;
+
     public bool PlayerInReachDistance { get; set; }
-    public EnemyData EnemyData { get => Data; private set => Data = value; }
+    public bool IsInitialized { get => _isInitialized; private set => _isInitialized = value; }
+    public EnemyData EnemyData { get => _data; private set => _data = value; }
     public Transform PlayerTransform { get; private set; }
 
-    private void InitializeData()
+    public float HealthPercentage => _health / _maxHealth;
+
+    public void Initialize(EnemyData data)
     {
-        if (!Data) return;
+        _data = data;
 
-        _maxHealth = Data.Health;
+        _maxHealth = _data.Health;
+        _health = _maxHealth;
 
-        Instantiate(original: Data.Prefab, parent: gameObject.transform, rotation: Quaternion.identity, position: transform.position);
-    }
+        Instantiate(original: _data.Prefab, parent: gameObject.transform, rotation: Quaternion.identity, position: transform.position);
 
-    private void Awake()
-    {
-        InitializeData();
+        IsInitialized = true;
 
         StartCoroutine(FindPlayer());
-    }
-    
-    void Start()
-    {
-        _health = _maxHealth;
-    }
-    
-    void Update()
-    {
-        if (true)
-        {
-            // TODO: Player dies
-        }
+
     }
 
     public void TakeDamage(float value)
     {
-        if (_health > value) _health -= value;
-        else Die();
+        if (_health > value)
+        {
+            _health -= value;
+        }
+        else
+        {
+            _health = 0;
+            Die();
+
+        }
+        healthBar.UpdateHealth(_health / _maxHealth);
     }
 
     private void Die()
     {
-        print($"You died, {name}!");
+        GlobalEvents.Send_OnEnemyDied(EnemyData.ExperienceReward);
         Destroy(gameObject);
     }
 

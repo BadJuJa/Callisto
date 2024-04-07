@@ -1,26 +1,27 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(InputHandler), typeof(Rigidbody))]
+[RequireComponent(typeof(InputHandler), typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour {
-    public Transform ModelTransform;
 
+    [Header("References")]
+    public Transform ModelTransform;
+    private CharacterController controller;
+    private InputHandler _input;
+
+    [Header("Parameters")]
     [SerializeField] private float _movementSpeed = 5;
     [SerializeField] private float _turnSpeed = 360;
 
-    private InputHandler _input;
-    private Rigidbody _rb;
-
-
-    private Vector3 _finalMovementVector;
+    [Header("Inner usage")]
+    private Vector3 playerVelocity;
+    private float _correctSpeed;
+    private bool groundedPlayer;
 
 
     private void Awake()
     {
         _input = GetComponent<InputHandler>();
-        _rb = GetComponent<Rigidbody>();
+        controller = gameObject.GetComponent<CharacterController>();
 
     }
 
@@ -28,24 +29,26 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (_input.MoveInputVector != Vector2.zero)
         {
-            float correct_speed = _movementSpeed / _input.MoveInputVector3D.magnitude * Time.deltaTime;
-            _finalMovementVector = transform.position + correct_speed * _input.MoveInputVector3D.ToRotation();
+            _correctSpeed = _movementSpeed / _input.MoveInputVector3D.magnitude;
         }
-        
+
+        CheckGrounded();
+        Move();
+        ApplyGravity();
+
         Look();
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        Move();
+        ModelTransform.position = transform.position;
     }
 
     private void Move()
     {
         if (_input.MoveInputVector == Vector2.zero) return;
 
-        
-        _rb.MovePosition(_finalMovementVector);
+        controller.Move(Time.deltaTime * _correctSpeed * _input.MoveInputVector3D.ToRotation());
     }
 
     private void Look()
@@ -59,5 +62,20 @@ public class PlayerMovement : MonoBehaviour {
 
         if (!ModelTransform) return;
         ModelTransform.rotation = Quaternion.RotateTowards(ModelTransform.rotation, rot, _turnSpeed * Time.deltaTime);
+    }
+
+    private void ApplyGravity()
+    {
+        playerVelocity.y += Physics.gravity.y * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private void CheckGrounded()
+    {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
+        {
+            playerVelocity.y = 0f;
+        }
     }
 }

@@ -197,6 +197,17 @@
                 },
                 {
                     "name": "",
+                    "id": "8ac3fa02-9d46-44b7-8f71-502e5c246b6d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchToMelee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "38d3259a-02f1-4bfb-b1f5-8d988bc10ede",
                     "path": "<Keyboard>/2",
                     "interactions": "",
@@ -208,8 +219,30 @@
                 },
                 {
                     "name": "",
+                    "id": "c1051c62-e73a-46e9-9597-3c7b85b80842",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchToLight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4b17422b-685d-4d53-90c3-728b5b128646",
                     "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchToHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bad5e837-4210-4e8f-b020-27a8ac0c2262",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -18,4 +18,5 @@ public class EnemyData : ScriptableObject {
 
     [Header("Other Settings")]
     public EnemyTypes EnemyType;
+    public float ExperienceReward;
 }

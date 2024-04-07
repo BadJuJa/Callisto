@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,17 +6,9 @@ using UnityEngine.UI;
 public class UIPlayerHealth : MonoBehaviour
 {
     public Slider slider;
-    public float AnimationTime;
+    public Slider easeSlider;
 
-    private float _currentValue;
-    private float _desiredValue;
-
-    private void Start()
-    {
-        _currentValue = slider.value;
-
-        StartCoroutine(LerpHealth());
-    }
+    public float lerpSpeed = 0.05f;
 
     private void OnEnable()
     {
@@ -27,25 +20,22 @@ public class UIPlayerHealth : MonoBehaviour
         GlobalEvents.OnPlayerHealthChanged -= UpdateSlider;
     }
 
-    public void UpdateSlider(float fillValue)
+    private void Update()
     {
-        _desiredValue = _currentValue - fillValue;
-        if ( _desiredValue < 0 )
+        if (slider.value != easeSlider.value)
         {
-            _desiredValue = 0;
+            easeSlider.value = Mathf.Lerp(easeSlider.value, slider.value, lerpSpeed);
+            //easeSlider.value = Mathf.Lerp(slider.value, easeSlider.value, lerpSpeed);
         }
     }
 
-    private IEnumerator LerpHealth()
+    public void UpdateSlider(float fillValue)
     {
-        while (true)
+        if (fillValue < 0 )
         {
-            if (_currentValue != _desiredValue)
-            {
-                _currentValue = Mathf.Lerp(_currentValue, _desiredValue, AnimationTime);
-                slider.value = _currentValue;
-            }
-            yield return null;
+            fillValue = 0;
         }
+
+        slider.value = fillValue;
     }
 }

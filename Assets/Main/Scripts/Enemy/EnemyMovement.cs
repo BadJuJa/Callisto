@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         if (_enemyCentralInterface.PlayerTransform == null) return;
-
+        
         if (!_enemyCentralInterface.PlayerInReachDistance)
         {
             MoveTowardsPlayer();
@@ -34,7 +34,6 @@ public class EnemyMovement : MonoBehaviour
         {
             _agent.isStopped = true;
         }
-        
     }
 
     void MoveTowardsPlayer()
@@ -42,4 +41,6 @@ public class EnemyMovement : MonoBehaviour
         _agent.isStopped = false;
         _agent.SetDestination(_enemyCentralInterface.PlayerTransform.position);
     }
+
 }
+

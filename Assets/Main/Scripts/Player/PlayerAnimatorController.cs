@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -17,6 +15,8 @@ public class PlayerAnimatorController : MonoBehaviour
         {
             stopAnimation = true;
         };
+
+        GlobalEvents.OnSwitchToAttackType += (value) => _animator.SetInteger("AttackType", value);
     }
 
     private void OnDisable()
@@ -30,6 +30,7 @@ public class PlayerAnimatorController : MonoBehaviour
     private void Awake()
     {
         _animator =  GetComponent<Animator>();
+        _inputHandler = GetComponentInParent<InputHandler>();
     }
     
     private void Update()

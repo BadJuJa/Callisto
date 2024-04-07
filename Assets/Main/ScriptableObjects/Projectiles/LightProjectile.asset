@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9ae32cbef3d8a42b199e74ec39f0c5, type: 3}
   m_Name: LightProjectile
   m_EditorClassIdentifier: 
-  ProjectilePrefab: {fileID: 9060748323321137293, guid: c1e8cff1195113f4289fe2fdc62f96d2, type: 3}
+  ProjectilePrefab: {fileID: 1923475578775391438, guid: 33723e508651a924684ee25dbfee1fc1, type: 3}
   AttackType: 1
   AttackTime: 0.5
   Speed: 50
-  Damage: 10
+  Damage: 20
   MaxPiercing: 1

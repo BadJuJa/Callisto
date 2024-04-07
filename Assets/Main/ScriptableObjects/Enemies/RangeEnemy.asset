@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 927a6f7825a0fa64191deb5ab0cd8bd0, type: 3}
   m_Name: RangeEnemy
   m_EditorClassIdentifier: 
-  Prefab: {fileID: 5557279390079599381, guid: 904e7fc4e1f0b7f49ba88f7392d102aa, type: 3}
+  Prefab: {fileID: 6203114470595908415, guid: 73b960d954b4d0e41833cf51608d11e6, type: 3}
+  AttackProjectilePrefab: {fileID: 1923475578775391438, guid: 1cc7529b47f80124098f38346eef1dff, type: 3}
   AttackRange: 10
   Damage: 10
   Health: 80
   AttackCooldown: 2
   MovementSpeed: 7
   EnemyType: 1
-  PlayerInReach: 0
+  ExperienceReward: 35

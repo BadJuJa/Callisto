@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour, IDamagable
 {
-    private float _maxHealth = 100;
+    public float _maxHealth = 1000;
     private float _currentHealth;
 
     private void Awake()
@@ -33,7 +33,6 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     private float GetHealthPercentage()
     {
-        print(_currentHealth / _maxHealth);
         return _currentHealth / _maxHealth;
     }
 

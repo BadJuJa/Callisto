@@ -130,6 +130,37 @@ Transform:
   - {fileID: 7504550368626478872}
   m_Father: {fileID: 8067190868011918822}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1454542449377029555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1855363072453949523}
+  m_Layer: 0
+  m_Name: UpgradePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1855363072453949523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454542449377029555}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.83, y: 0.88, z: 1.92}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8067190868011918822}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1584122598657625812
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +390,7 @@ Transform:
   - {fileID: 1876629411230812352}
   - {fileID: 4833203559894936857}
   - {fileID: 6053505952832639650}
+  - {fileID: 1855363072453949523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8320987162966059904
@@ -374,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPoint: {fileID: 1876629411230812352}
+  UpgradeSpawnPosition: {fileID: 1855363072453949523}
+  UpgradePrefab: {fileID: 3588404607131427198, guid: 842e879fcb35f8f4c9170cccc39af044, type: 3}
 --- !u!1 &4792292900944293883
 GameObject:
   m_ObjectHideFlags: 0

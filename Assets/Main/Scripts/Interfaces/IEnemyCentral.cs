@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface IEnemyCentral
 {
-    public bool PlayerInReachDistance {  get; set; }
+    public bool PlayerInReachDistance { get; set; }
+    public bool IsInitialized { get; }
     public EnemyData EnemyData { get; }
     public Transform PlayerTransform { get; }
 }

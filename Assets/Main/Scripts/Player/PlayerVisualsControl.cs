@@ -10,14 +10,22 @@ public class PlayerVisualsControl : MonoBehaviour {
     [SerializeField] private Animator _attackIndicatorAnimator;
     [SerializeField] private float _attackIndicatorTimeToExtend = 1f;
 
+    private void Awake()
+    {
+        _inputHandler = GetComponentInParent<InputHandler>();
+        _attackIndicatorAnimator = GetComponentInChildren<Animator>();
+    }
+
     private void OnEnable()
     {
         GlobalEvents.OnPlayerChangedAttackType += UpdateAttackFillTime;
+        GlobalEvents.OnSwitchToAttackType += (value) => _attackIndicatorAnimator.SetInteger("AttackType", value);
     }
 
     private void OnDisable()
     {
         GlobalEvents.OnPlayerChangedAttackType -= UpdateAttackFillTime;
+        GlobalEvents.OnSwitchToAttackType += (value) => _attackIndicatorAnimator.SetInteger("AttackType", value);
     }
 
     private void Update()
