@@ -1,3 +1,4 @@
+using BadJuja.Core;
 using Cinemachine;
 using System;
 using System.Collections;

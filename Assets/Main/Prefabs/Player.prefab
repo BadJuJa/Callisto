@@ -127,37 +127,6 @@ Transform:
   - {fileID: 5087637239811480040}
   m_Father: {fileID: 5567895128968446745}
   m_LocalEulerAnglesHint: {x: -16.512806, y: -10.625328, z: -8.035053}
---- !u!1 &994171659488415500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3190628366481412479}
-  m_Layer: 31
-  m_Name: Upgrades
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3190628366481412479
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 994171659488415500}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3892378078219578966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1063447906442769085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,7 +1637,6 @@ Transform:
   - {fileID: 8393215460892159631}
   - {fileID: 3237775505550419829}
   - {fileID: 3009215035840589046}
-  - {fileID: 3190628366481412479}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &738943881814133496
@@ -1789,7 +1757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerStatCheckDelay: 1
-  UpgradesParent: {fileID: 3190628366481412479}
+  UpgradesParent: {fileID: 0}
   Health:
     BaseValue: 100
     MaxValue: 0
@@ -2351,7 +2319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3009215035840589046}
   - component: {fileID: 3442556191716029534}
-  - component: {fileID: 6269946491894138593}
+  - component: {fileID: 4429453279833695464}
   m_Layer: 0
   m_Name: Combat
   m_TagString: Untagged
@@ -2393,7 +2361,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80e60df1449bf74459f303f19a9519d3, type: 2}
   PlayerData: {fileID: 11400000, guid: 274703a3efd71de4ab8d562c4f6c4364, type: 2}
   AttackType: 1
---- !u!114 &6269946491894138593
+--- !u!114 &4429453279833695464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2402,7 +2370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7714256770593364713}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e4d68213a5180c428e1e04ebc39441d, type: 3}
+  m_Script: {fileID: 11500000, guid: 49defe7cfa5cbe0488debf66f3a9fe0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Stat: 2

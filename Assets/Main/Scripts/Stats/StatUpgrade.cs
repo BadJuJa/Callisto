@@ -1,5 +1,9 @@
-using BadJuja.CharacterStats;
+using BadJuja.Core.CharacterStats;
+using BadJuja.Core;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+
 
 public class StatUpgrade : MonoBehaviour
 {
@@ -7,15 +11,51 @@ public class StatUpgrade : MonoBehaviour
     public StatModType ModType;
     public float Strenght;
 
-    public virtual void Apply(CharacterCore c)
+    private UpgradeScreen upgradeScreen;
+    [SerializeField] private TextMeshProUGUI _text;
+
+    private Dictionary<AllCharacterStats, string> statTranslationDict = new()
     {
-        c.Stats[Stat].AddModifier(new StatModifier(Strenght, ModType, this));
-        var t = c.Stats[Stat].Value;
-    }
-    public virtual void Remove(CharacterCore c)
+        { AllCharacterStats.Health, "здоровье" },
+        { AllCharacterStats.Damage, "урон" },
+        { AllCharacterStats.DamageReduction, "сопротивление урону" },
+    };
+
+    private void Awake()
     {
-        c.Stats[Stat].RemoveAllModifiersFromSource(this);
-        var t = c.Stats[Stat].Value;
+        upgradeScreen = GetComponentInParent<UpgradeScreen>();
+
+        if (_text == null)
+            _text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    public void Clicked()
+    {
+        if (upgradeScreen == null) return;
+        
+        upgradeScreen.ApplyModifier(Stat, ModType, Strenght);
+    }
+
+    public void UpdateDescription()
+    {
+        if (_text == null) return;
+
+        string text = _text.text
+            .Replace("<upgradeStat>", statTranslationDict[Stat])
+            .Replace("<strenght>", Strenght.ToString())
+            .Replace("<modType>", ModType == StatModType.Flat ? "" : ModType == StatModType.PercentAdd ? "% аддитивно" : "% мультипликативно");
+        _text.SetText(text);
+    }
+
+    public void Init(AllCharacterStats stat, StatModType type, float strenght)
+    {
+        Stat = stat;
+        ModType = type;
+        if (type == StatModType.PercentAdd || type == StatModType.PercentMult)
+            Strenght = strenght / 100;
+
+        else Strenght = stat == AllCharacterStats.DamageReduction ? strenght / 5 : strenght;
+
+        UpdateDescription();
+    }
 }

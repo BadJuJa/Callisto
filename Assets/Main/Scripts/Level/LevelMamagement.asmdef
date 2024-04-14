@@ -1,0 +1,16 @@
+{
+    "name": "LevelMamagement",
+    "rootNamespace": "",
+    "references": [
+        "GUID:697400e1adde4c44ba473ee49e3fb137"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,14 +1,15 @@
+using BadJuja.Core;
 using UnityEngine;
 
-public class ShinyExitTrigger : MonoBehaviour
-{
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-        if (other.gameObject.CompareTag("Player"))
+namespace BadJuja.LevelManagement {
+    public class ShinyExitTrigger : MonoBehaviour {
+        private void OnTriggerEnter(Collider other)
         {
-            GlobalEvents.Send_OnPlayerExitedRoom();
+
+            if (other.gameObject.CompareTag("Player"))
+            {
+                GlobalEvents.Send_OnPlayerExitedRoom();
+            }
         }
     }
 }

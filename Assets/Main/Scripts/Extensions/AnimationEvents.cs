@@ -1,3 +1,4 @@
+using BadJuja.Core;
 using UnityEngine;
 
 public class AnimationEvents : MonoBehaviour
