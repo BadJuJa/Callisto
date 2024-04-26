@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 927a6f7825a0fa64191deb5ab0cd8bd0, type: 3}
+  m_Name: RangeEnemy
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 6203114470595908415, guid: 73b960d954b4d0e41833cf51608d11e6, type: 3}
+  AttackProjectilePrefab: {fileID: 1923475578775391438, guid: 1cc7529b47f80124098f38346eef1dff, type: 3}
+  AttackRange: 10
+  Damage: 10
+  Health: 80
+  AttackCooldown: 2
+  MovementSpeed: 7
+  EnemyType: 1
+  ExperienceReward: 35

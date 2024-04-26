@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9493d21dcf715a64b99a0604a0c01be7, type: 3}
+  m_Name: Player Current Equipment
+  m_EditorClassIdentifier: 
+  LightRangedWeaponData: {fileID: 11400000, guid: 388e65e64784b29419a0e85ffeee62be, type: 2}
+  LightRangedWeaponElement: 0
+  HeavyRangedWeaponData: {fileID: 11400000, guid: e0cb62f73db2e274d98155fa3d507068, type: 2}
+  HeavyRangedWeaponElement: 0
+  MeleeWeaponData: {fileID: 11400000, guid: 88a7d8a203729dd4285d662fc879a505, type: 2}
+  MeleeWeaponElement: 2
+  CharacterBonusModifiers: []
