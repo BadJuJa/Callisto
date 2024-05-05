@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed69303f37a97fd4d82943239feeae26, type: 3}
+  m_Name: Damage
+  m_EditorClassIdentifier: 
+  Stat: 3
+  ModType: 200
+  upgradeRarities:
+  - Rarity: {fileID: 11400000, guid: 049fb8dc20301c441ae178f28fc07b83, type: 2}
+    Strength: 10
+  - Rarity: {fileID: 11400000, guid: 032672a3543376248926eab7035fac59, type: 2}
+    Strength: 20
+  - Rarity: {fileID: 11400000, guid: 2c63e89f1769b4c45a418208ddb9808b, type: 2}
+    Strength: 30
+  - Rarity: {fileID: 11400000, guid: f51810c03413aed4e888699e3994c17c, type: 2}
+    Strength: 40
