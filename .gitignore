@@ -74,3 +74,4 @@ crashlytics-build.properties
 # Samples
 /[Aa]ssets/[Ss]amples/*
 *.meta
+Assets/_Project/Models/Ch40/Ch40_nonPBR@Sitting Idle.fbx
