@@ -265,8 +265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4939349145116362802}
   - component: {fileID: 2990974942706610621}
-  - component: {fileID: 3785301090554204722}
   - component: {fileID: 8053632230703982916}
+  - component: {fileID: 3785301090554204722}
   m_Layer: 0
   m_Name: Fire Char Model
   m_TagString: Untagged
@@ -315,19 +315,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3785301090554204722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842820168374422339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f8b43f72228404096f37f7b5fb3820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputHandler: {fileID: 0}
 --- !u!114 &8053632230703982916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +324,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 842820168374422339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e99fd33424fc74e876043768433703, type: 3}
+  m_Script: {fileID: 11500000, guid: 9903bde8639dc804b8bfbe70915bc86c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputHandler: {fileID: 0}
+--- !u!114 &3785301090554204722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842820168374422339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58db45b34773e41459caf59f7efffba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ModelFiringPoint: {fileID: 442618844061632660}

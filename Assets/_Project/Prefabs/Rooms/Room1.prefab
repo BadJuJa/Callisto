@@ -442,7 +442,6 @@ Transform:
   - {fileID: 7531349075963521073}
   - {fileID: 4500933280133229863}
   - {fileID: 3230798664814357954}
-  - {fileID: 4631410754952609720}
   - {fileID: 3789281494343643172}
   - {fileID: 1624815721935558482}
   - {fileID: 6204643844779859149}
@@ -460,28 +459,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8639b7d8eb0061743b92306431ea486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5557279390079599381, guid: 904e7fc4e1f0b7f49ba88f7392d102aa,
+  _cameraConfinderCollider: {fileID: 6482750011704499275}
+  _enemyPrefab: {fileID: 5557279390079599381, guid: 904e7fc4e1f0b7f49ba88f7392d102aa,
     type: 3}
-  playerSpawnPoint: {fileID: 3789281494343643172}
-  spawnPoints:
+  _playerSpawnPoint: {fileID: 3789281494343643172}
+  _enemySpawnPoints:
   - {fileID: 4683304522605873505}
-  - {fileID: 42325548454792415}
   - {fileID: 4766382644885930843}
-  - {fileID: 2357991837764369097}
   - {fileID: 1427059368421760359}
-  - {fileID: 5138111520428106145}
-  - {fileID: 2706294160762515429}
-  - {fileID: 5705907782465044184}
   - {fileID: 6551401198649039988}
+  - {fileID: 2706294160762515429}
+  - {fileID: 42325548454792415}
+  - {fileID: 2357991837764369097}
+  - {fileID: 5138111520428106145}
+  - {fileID: 5705907782465044184}
   - {fileID: 5980614245669228678}
-  enemiesToSpawn:
-  - Data: {fileID: 11400000, guid: 215df785e952ae64b8a0d695f2826e47, type: 2}
-    Amount: 3
-  - Data: {fileID: 11400000, guid: 7418b8524012076468a5ef925079c442, type: 2}
-    Amount: 2
-  timeBetweenSpawns: 2
-  Enemies: {fileID: 4631410754952609720}
-  CameraConfinderCollider: {fileID: 6482750011704499275}
 --- !u!1 &3017601357817350871
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,37 +1145,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 21, y: 0.02, z: 37}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &8043648303711815949
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4631410754952609720}
-  m_Layer: 0
-  m_Name: Enemies
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4631410754952609720
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8043648303711815949}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2749743856346146403}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8082553817804878390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,9 +1259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21731236cf67c64469aa62ffc3c007c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LockedExit: {fileID: 7289809502191816415}
-  UnlockedExit: {fileID: 3756399415313034446}
-  ShinyExit: {fileID: 3623489835765484534}
+  ObjectsToEnable:
+  - {fileID: 3623489835765484534}
+  ObjectsToDisable:
+  - {fileID: 7289809502191816415}
 --- !u!1001 &135144347890796163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6136,12 +6098,6 @@ PrefabInstance:
 --- !u!4 &2461136917723637605 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8027438873673064772, guid: 52254b2a0535e1947bea7fc16d981490,
-    type: 3}
-  m_PrefabInstance: {fileID: 5566598550436283937}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3756399415313034446 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8746534454459263727, guid: 52254b2a0535e1947bea7fc16d981490,
     type: 3}
   m_PrefabInstance: {fileID: 5566598550436283937}
   m_PrefabAsset: {fileID: 0}

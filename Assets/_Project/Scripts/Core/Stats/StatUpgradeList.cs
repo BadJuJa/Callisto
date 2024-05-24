@@ -15,8 +15,8 @@ namespace BadJuja.Core.CharacterStats
     [CreateAssetMenu(fileName = "New Stat Upgrade List", menuName = "Data/Stats/Stat Upgrade List")]
     public class StatUpgradeList : ScriptableObject
     {
+        private StatModType ModType = StatModType.Flat;
         [SerializeField] private AllCharacterStats Stat;
-        [SerializeField] private StatModType ModType;
         [SerializeField] private List<UpgradeRarity> upgradeRarities = new();
                                   
         private float[] probabilities;

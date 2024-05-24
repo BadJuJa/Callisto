@@ -8,7 +8,7 @@ namespace BadJuja.LevelManagement {
 
             if (other.gameObject.CompareTag("Player"))
             {
-                PlayerRelatedEvents.Send_OnPlayerExitedRoom();
+                PlayerRelatedEvents.Send_OnExitedRoom();
             }
         }
     }

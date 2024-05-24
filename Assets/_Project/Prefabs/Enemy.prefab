@@ -385,43 +385,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1771982974677595217}
   AttackPoint: {fileID: 9128420058357248759}
-  _stats:
-    Health:
-      BaseValue: 100
-      MaxValue: 0
-    Armor:
-      BaseValue: 0
-      MaxValue: 0
-    MovementSpeed:
-      BaseValue: 5
-      MaxValue: 0
-    Damage:
-      BaseValue: 0
-      MaxValue: 0
-    CritChance:
-      BaseValue: 5
-      MaxValue: 0
-    CritDamage:
-      BaseValue: 135
-      MaxValue: 0
-    FireDamage:
-      BaseValue: 0
-      MaxValue: 0
-    FrostDamage:
-      BaseValue: 0
-      MaxValue: 0
-    ShockDamage:
-      BaseValue: 0
-      MaxValue: 0
-    FireResistance:
-      BaseValue: 0
-      MaxValue: 80
-    FrostResistance:
-      BaseValue: 0
-      MaxValue: 80
-    ShockResistance:
-      BaseValue: 0
-      MaxValue: 80
 --- !u!114 &2795255081796198985
 MonoBehaviour:
   m_ObjectHideFlags: 0

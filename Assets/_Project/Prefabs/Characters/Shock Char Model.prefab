@@ -289,7 +289,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1215125796393529438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f8b43f72228404096f37f7b5fb3820, type: 3}
+  m_Script: {fileID: 11500000, guid: 9903bde8639dc804b8bfbe70915bc86c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _inputHandler: {fileID: 0}
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1215125796393529438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7e99fd33424fc74e876043768433703, type: 3}
+  m_Script: {fileID: 11500000, guid: 58db45b34773e41459caf59f7efffba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ModelFiringPoint: {fileID: 2433486505830499922}

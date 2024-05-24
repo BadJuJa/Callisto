@@ -1,27 +1,21 @@
 using BadJuja.Core.Data;
-using BadJuja.Player;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace BadJuja.Core
 {
     public class MainSceneEntryPoint : MonoBehaviour
     {
-        public int UISceneIndex = 0;
+        public GameManager GameManager;
 
+        [Space]
         public PlayerCurrentEquipment PlayerCurrentEquipment;
 
+        [Space]
         public Player.Player Player;
-        public PlayerCombat PlayerCombat;
-        public PlayerMovement PlayerMovement;
-
         public LevelManagement.LevelManager LevelManager;
-        private void Awake()
-        {
-#if !UNITY_EDITOR
-            SceneManager.LoadSceneAsync(UISceneIndex, LoadSceneMode.Additive);
-#endif
-        }
+
+        private Player.Movement _playerMovement;
+        private Player.Combat _playerCombat;
 
         private void Start()
         {
@@ -30,27 +24,23 @@ namespace BadJuja.Core
 
         public void Initialize()
         {
+            GameManager.Initialize();
+
             if (Player != null)
                 Player.Initialize(PlayerCurrentEquipment);
-            
-            PlayerModel playerModelComponent = Player.InstantiateModel(PlayerCurrentEquipment.Model);
 
-            PlayerMovement = Player.gameObject.GetComponent<PlayerMovement>();
-            PlayerMovement.Initialize(playerModelComponent.GetModelTransform());
+            Player.Visuals.Model playerModelComponent = Player.InstantiateModel(PlayerCurrentEquipment.Model);
 
-            if (PlayerCombat != null)
-                PlayerCombat.Initialize(playerModelComponent.GetFiringPoint(), PlayerCurrentEquipment);
+            _playerMovement = Player.gameObject.GetComponent<Player.Movement>();
+            _playerMovement.Initialize(playerModelComponent.GetModelTransform());
+
+            if (_playerCombat == null)
+                _playerCombat = Player.GetComponentInChildren<Player.Combat>();
+            _playerCombat.Initialize(playerModelComponent.GetFiringPoint(), PlayerCurrentEquipment);
 
             if (LevelManager != null)
-                LevelManager.Initialize();
+                LevelManager.Initialize(Player.transform);
             
-        }
-
-        private void OnDestroy()
-        {
-#if !UNITY_EDITOR
-            SceneManager.UnloadSceneAsync(UISceneIndex);
-#endif
         }
     }
 }

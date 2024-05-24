@@ -5,22 +5,22 @@ public class AnimationEvents : MonoBehaviour
 {
     public void AttackEvent()
     {
-        PlayerRelatedEvents.Send_OnPlayerAttack();
+        PlayerRelatedEvents.Send_OnAttack();
     }
 
     public void AttackEnded()
     {
-        PlayerRelatedEvents.Send_OnPlayerAttackEnded();
+        PlayerRelatedEvents.Send_OnAttackEnded();
     }
 
     public void DisableVFX()
     {
-        PlayerRelatedEvents.Send_OnPlayerAttackDisableVFX();
+        PlayerRelatedEvents.Send_OnAttackDisableVFX();
     }
 
     public void PrepareAttack()
     {
-        PlayerRelatedEvents.Send_OnPlayerAttackPrepare();
+        PlayerRelatedEvents.Send_OnAttackPrepare();
     }
 
     public void FadedIn()

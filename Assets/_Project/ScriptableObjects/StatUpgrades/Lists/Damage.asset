@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Damage
   m_EditorClassIdentifier: 
   Stat: 3
-  ModType: 200
   upgradeRarities:
   - Rarity: {fileID: 11400000, guid: 049fb8dc20301c441ae178f28fc07b83, type: 2}
     Strength: 10

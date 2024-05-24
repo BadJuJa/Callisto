@@ -1,146 +1,88 @@
-using BadJuja.Core.Data;
+using BadJuja.Core;
 using BadJuja.Core.Events;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BadJuja.LevelManagement {
     public class LevelManager : MonoBehaviour {
+
+        public DifficultyEscalation DifficultyEscalation;
+
+        [Space]
         public GameObject[] Rooms;
         public GameObject[] Intersections;
-        public Transform[] SpawnPoints;
+        
+        [Space, Tooltip("Spawn Intersection every N rooms")]
+        public int IntersectionsFrequency = 5;
 
-        public EnemyList EasyEnemyList;
-        public EnemyList NormalEnemyList;
-        public EnemyList HardEnemyList;
+        [Space]
+        public GameObject CurrentRoom;
 
-        public Transform PlayerTransform;
-
-        public Core.Settings.Settings Settings;
-
-        private GameObject previousRoom;
-        private GameObject currentRoom;
-
+        private Transform _playerTransform;
         private int roomIndex = 0;
-        private int spawnPointIndex = 0;
-        private Vector3 roomPlayerSpawnpoint;
 
         private void OnDestroy()
         {
-            PlayerRelatedEvents.OnPlayerExitedRoom -= Proceed_p1;
-            LevelLoadingRelatedEvents.OnScreenFadeOutFinished -= Proceed_p2;
+            PlayerRelatedEvents.OnPlayerExitedRoom -= ProceedNext_pt1;
+            LevelLoadingRelatedEvents.OnScreenFadeOutFinished -= ProceedNext_pt2;
         }
 
-        public void Initialize()
+        public void Initialize(Transform playerTransform)
         {
-            PlayerRelatedEvents.OnPlayerExitedRoom += Proceed_p1;
-            LevelLoadingRelatedEvents.OnScreenFadeOutFinished += Proceed_p2;
+            _playerTransform = playerTransform;
+            PlayerRelatedEvents.OnPlayerExitedRoom += ProceedNext_pt1;
+            LevelLoadingRelatedEvents.OnScreenFadeOutFinished += ProceedNext_pt2;
         }
-        private void Proceed_p1()
+        private void ProceedNext_pt1()
         {
-            if (PlayerTransform == null) return;
+            if (_playerTransform == null) return;
 
-            PlayerTransform.gameObject.SetActive(false);
-            
+            _playerTransform.gameObject.SetActive(false);
+
             // Затенить экран
-            FadeOut();
+            LevelLoadingRelatedEvents.Send_OnScreenFadeOutStarted();
         }
 
-        private void Proceed_p2()
+        private void ProceedNext_pt2()
         {
-            SpawnNewRoom();
+            Destroy(CurrentRoom);
 
-            if (currentRoom.TryGetComponent(out IGeneralRoomControl controls))
+            SpawnRoom();
+
+            if (CurrentRoom.TryGetComponent(out IGeneralRoomControl controls))
             {
-                roomPlayerSpawnpoint = controls.PlayerSpawnPoint.position;
+                _playerTransform.position = controls.PlayerSpawnPoint.position;
             }
-
-
-            PlayerTransform.position = roomPlayerSpawnpoint;
-
-            Destroy(previousRoom);
-
-            PlayerTransform.gameObject.SetActive(true);
 
             IEnumerator _()
             {
                 yield return new WaitForSeconds(.5f);
-                FadeIn();
+                LevelLoadingRelatedEvents.Send_OnScreenFadeInStarted();
+                _playerTransform.gameObject.SetActive(true);
             }
 
             StartCoroutine(_());
 
-            PlayerRelatedEvents.Send_PlayerEnteredLevel();
+            PlayerRelatedEvents.Send_EnteredLevel();
         }
 
-        private GameObject GetRandomRoom()
+        private GameObject GetRandomRoom(GameObject[] roomList)
         {
-            return Rooms[Random.Range(0, Rooms.Length)];
+            return roomList[Random.Range(0, roomList.Length)];
         }
 
-        private GameObject GetRandomIntersection()
+        private void SpawnRoom()
         {
-            return Intersections[Random.Range(0, Intersections.Length)];
-        }
-
-        private List<EnemyData> GetNextRoomEnemies()
-        {
-            int count = 5 + roomIndex;
-
-            int easyCount = 0;
-            int normalCount = 0;
-            int hardCount = 0;
-            switch (Settings.DiffecultyLevel)
-            {
-                case Core.Settings.DiffecultyLevel.Easy:
-                    easyCount = Mathf.RoundToInt(count * 0.7f);
-                    normalCount = count - easyCount;
-                    break;
-                case Core.Settings.DiffecultyLevel.Normal:
-                    normalCount = Mathf.RoundToInt(count * 0.6f);
-                    easyCount = Mathf.RoundToInt(count * 0.2f);
-                    hardCount = count - normalCount - easyCount;
-                    break;
-                case Core.Settings.DiffecultyLevel.Hard:
-                    hardCount = Mathf.RoundToInt(count * 0.7f);
-                    normalCount = count - hardCount;
-                    break;
-            }
-            List<EnemyData> result = new();
-            if (easyCount > 0)
-                result.AddRange(EasyEnemyList.GetRandomEnemies(easyCount));
-            if (normalCount > 0)
-                result.AddRange(NormalEnemyList.GetRandomEnemies(normalCount));
-            if (hardCount > 0)
-                result.AddRange(HardEnemyList.GetRandomEnemies(hardCount));
-            return result;
-        }
-
-        private void SpawnNewRoom()
-        {
-            previousRoom = currentRoom;
-
             GameObject roomToSpawn;
-            roomToSpawn = roomIndex % 6 == 5 ? GetRandomIntersection() : GetRandomRoom();
+            roomToSpawn = roomIndex % 6 == 5 ? GetRandomRoom(Intersections) : GetRandomRoom(Rooms);
 
-            spawnPointIndex = spawnPointIndex == 0 ? 1 : 0;
-            currentRoom = Instantiate(roomToSpawn, SpawnPoints[spawnPointIndex].position, Quaternion.identity);
+            CurrentRoom = Instantiate(roomToSpawn, Vector3.zero, Quaternion.identity);
 
-            if(currentRoom.TryGetComponent(out RoomControls roomControls))
+            if(CurrentRoom.TryGetComponent(out RoomControls roomControls))
             {
-                roomControls.Initialize(GetNextRoomEnemies());
+                roomControls.Initialize(DifficultyEscalation.GetNextRoomEnemies(roomIndex));
             }
             roomIndex++;
-        }
-
-        private void FadeIn()
-        {
-            LevelLoadingRelatedEvents.Send_OnScreenFadeInStarted();
-        }
-
-        private void FadeOut()
-        {
-            LevelLoadingRelatedEvents.Send_OnScreenFadeOutStarted();
         }
     }
 }

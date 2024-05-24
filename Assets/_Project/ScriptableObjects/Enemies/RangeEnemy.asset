@@ -20,4 +20,5 @@ MonoBehaviour:
   AttackCooldown: 2
   EnemyType: 1
   ExperienceReward: 35
-  BaseStatsOverride: {fileID: 11400000, guid: c72754c944d06b94e8d765ef600afe3a, type: 2}
+  Element: {fileID: 11400000, guid: af799ba253768844fa033f07e48f97bc, type: 2}
+  StatsOverride: {fileID: 11400000, guid: 073ba613f154b6045994f8b817dee15a, type: 2}

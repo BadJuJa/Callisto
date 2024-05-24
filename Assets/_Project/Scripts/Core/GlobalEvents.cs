@@ -13,14 +13,11 @@ namespace BadJuja.Core.Events {
 
     public static class ModifiersRelaterEvents
     {
-        public static bool ModifiersHandlerIsReady { get; private set; } = false;
-
         #region Events
 
         public static Action<AllCharacterStats, StatModifier, object> ApplyModifierToPlayer;
         public static Action<AllCharacterStats, object> RemovePlayerModifier;
         public static Action<StatModifier, object> ApplyModifierToTarget;
-
 
         #endregion
 
@@ -30,11 +27,6 @@ namespace BadJuja.Core.Events {
         public static void Send_AddPlayerModifier(AllCharacterStats stat, StatModifier modifier, object source) => ApplyModifierToPlayer?.Invoke(stat, modifier, source);
         public static void Send_RemovePlayerModifier(AllCharacterStats stat, object source) => RemovePlayerModifier?.Invoke(stat, source);
 
-        public static void InitiateModifierHandler(ref StatModifiersHandler handler)
-        {
-            if (handler != null) ModifiersHandlerIsReady = true;
-        }
-
         #endregion
 
     }
@@ -43,14 +35,15 @@ namespace BadJuja.Core.Events {
         
         #region Events
 
-        public static Action<float> OnEnemyDied;
+        public static Action<int> OnEnemyDied;
+        public static Action<Transform> PriorityTargetChanged;
 
         #endregion
 
         #region Senders
         
-        public static void Send_OnEnemyDied(float xpValue) => OnEnemyDied?.Invoke(xpValue);
-        
+        public static void Send_OnEnemyDied(int xpValue) => OnEnemyDied?.Invoke(xpValue);
+        public static void Send_PriorityTargetChanged(Transform newTarget) => PriorityTargetChanged?.Invoke(newTarget);
         #endregion
     }
 
@@ -79,19 +72,20 @@ namespace BadJuja.Core.Events {
         #endregion
     }
 
-    public static class PlayerRelatedEvents
-    {
+    public static class PlayerRelatedEvents {
         #region Events
 
-        public static Action OnPlayerAttacked;
-        public static Action OnPlayerAttackEnded;
-        public static Action OnPlayerAttackPrepare;
-        public static Action OnPlayerAttackDisableVFX;
+        public static Action OnDeath;
+
+        public static Action OnAttacked;
+        public static Action OnAttackEnded;
+        public static Action OnAttackPrepare;
+        public static Action OnAttackDisableVFX;
 
         public static Action<int> OnSwitchToAttackType;
-        public static Action OnPlayerChangedAttackType;
+        public static Action OnChangedAttackType;
 
-        public static Action OnPlayerEnteredLevel;
+        public static Action OnEnteredLevel;
         public static Action PlayerClearedTheRoom;
         public static Action OnPlayerExitedRoom;
 
@@ -104,23 +98,19 @@ namespace BadJuja.Core.Events {
 
         #region Senders
 
-        public static void Send_OnPlayerAttack() => OnPlayerAttacked?.Invoke();
-        public static void Send_OnPlayerAttackEnded() => OnPlayerAttackEnded?.Invoke();
-        public static void Send_OnPlayerAttackPrepare() => OnPlayerAttackPrepare?.Invoke();
-        public static void Send_OnPlayerAttackDisableVFX() => OnPlayerAttackDisableVFX?.Invoke();
-
-        public static void Send_OnPlayerChangedAttackType() => OnPlayerChangedAttackType?.Invoke();
+        public static void Send_OnAttack() => OnAttacked?.Invoke();
+        public static void Send_OnAttackEnded() => OnAttackEnded?.Invoke();
+        public static void Send_OnAttackPrepare() => OnAttackPrepare?.Invoke();
+        public static void Send_OnAttackDisableVFX() => OnAttackDisableVFX?.Invoke();
+        public static void Send_OnChangedAttackType() => OnChangedAttackType?.Invoke();
         public static void Send_OnSwitchToAttackType(int value) => OnSwitchToAttackType?.Invoke(value);
-
-        public static void Send_OnPlayerExitedRoom() => OnPlayerExitedRoom?.Invoke();
-        public static void Send_PlayerEnteredLevel() => OnPlayerEnteredLevel?.Invoke();
-
-        public static void Send_OnPlayerHealthChanged(float currentValue, float maxValue) => OnHealthChange?.Invoke(currentValue, maxValue);
-        public static void Send_OnPlayerExperienceChanged(float currentValue, float maxValue) => OnExperienceChange?.Invoke(currentValue, maxValue);
-        
-        public static void Send_OnPlayerClearedTheRoom() => PlayerClearedTheRoom?.Invoke();
-        public static void Send_OnPlayerLevelIncreased() => OnLevelIncrease?.Invoke();
-        
+        public static void Send_EnteredLevel() => OnEnteredLevel?.Invoke();
+        public static void Send_OnHealthChanged(float currentValue, float maxValue) => OnHealthChange?.Invoke(currentValue, maxValue);
+        public static void Send_OnExperienceChanged(float currentValue, float maxValue) => OnExperienceChange?.Invoke(currentValue, maxValue);
+        public static void Send_OnClearedTheRoom() => PlayerClearedTheRoom?.Invoke();
+        public static void Send_OnExitedRoom() => OnPlayerExitedRoom?.Invoke();
+        public static void Send_OnLevelIncreased() => OnLevelIncrease?.Invoke();
+        public static void Send_OnDeath() => OnDeath?.Invoke();
         #endregion
     }
 }

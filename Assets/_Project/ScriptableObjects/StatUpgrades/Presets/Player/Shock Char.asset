@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterModifiers:
   - Stat: 3
-    ModType: 200
+    ModType: 100
     Strenght: 15
   - Stat: 8
     ModType: 100

@@ -18,7 +18,7 @@ namespace BadJuja.Enemy {
             {
                 if (res[0].TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.TakeDamage(CalculateDamage());
+                    damagable.TakeDamage(CalculateDamage(), _data.Element.Element);
                 }
             }
             base.Attack();

@@ -7,24 +7,24 @@ using UnityEngine;
 
 namespace BadJuja.LevelManagement {
     public class RoomControls : MonoBehaviour, IGeneralRoomControl {
-        public GameObject enemyPrefab;
-        public Transform playerSpawnPoint;
-        public List<Transform> spawnPoints;
-        public float timeBetweenSpawns = 2f;
-        public Transform Enemies;
+        [SerializeField] private BoxCollider _cameraConfinderCollider;
 
-        public BoxCollider CameraConfinderCollider;
+        [SerializeField] private GameObject _enemyPrefab;
+        [SerializeField] private Transform _playerSpawnPoint;
+        [SerializeField] private Transform[] _enemySpawnPoints;
 
-        private Camera playerCamera;
+        private Camera _playerCamera;
 
         private List<EnemyData> _enemies;
+        private Transform EnemiesContainer;
+        private float _timeBetweenSpawns;
         private int _enemyCount = 0;
 
-        public Transform PlayerSpawnPoint => playerSpawnPoint;
+        public Transform PlayerSpawnPoint => _playerSpawnPoint;
 
         private void OnDestroy()
         {
-            PlayerRelatedEvents.OnPlayerEnteredLevel -= () => LevelLoadingRelatedEvents.Send_OnNewCameraConfinderColliderAvailable(CameraConfinderCollider);
+            PlayerRelatedEvents.OnEnteredLevel -= () => LevelLoadingRelatedEvents.Send_OnNewCameraConfinderColliderAvailable(_cameraConfinderCollider);
             EnemyRelatedEvents.OnEnemyDied -= (_) => _enemyCount--;
         }
 
@@ -32,18 +32,22 @@ namespace BadJuja.LevelManagement {
         public void Initialize(List<EnemyData> enemyDatas)
         {
             #region Camera
-            if (CameraConfinderCollider != null)
+            if (_cameraConfinderCollider != null)
             {
-                PlayerRelatedEvents.OnPlayerEnteredLevel += () => LevelLoadingRelatedEvents.Send_OnNewCameraConfinderColliderAvailable(CameraConfinderCollider);
+                PlayerRelatedEvents.OnEnteredLevel += () => LevelLoadingRelatedEvents.Send_OnNewCameraConfinderColliderAvailable(_cameraConfinderCollider);
             }
-            playerCamera = Camera.main;
+            _playerCamera = Camera.main;
             #endregion
 
             EnemyRelatedEvents.OnEnemyDied += (_) => _enemyCount--;
 
+            EnemiesContainer = new GameObject("Enemies").transform;
+            EnemiesContainer.SetParent(transform);
+
             _enemies = enemyDatas;
             _enemyCount = enemyDatas.Count;
 
+            _timeBetweenSpawns = Mathf.Clamp(20 / _enemies.Count, 1, 2.5f);
 
             StartCoroutine(SpawnEnemies());
         }
@@ -51,7 +55,7 @@ namespace BadJuja.LevelManagement {
         private IEnumerator SpawnEnemies()
         {
             bool spawned = false;
-
+            
             yield return new WaitForSeconds(2f);
 
             foreach (var enemy in _enemies)
@@ -66,11 +70,11 @@ namespace BadJuja.LevelManagement {
                         continue;
                     }
 
-                    var go = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation, Enemies);
+                    var go = Instantiate(_enemyPrefab, spawnPoint.position, spawnPoint.rotation, EnemiesContainer);
                     go.GetComponent<IEnemyInit>().Initialize(enemy);
 
                     spawned = true;
-                    yield return new WaitForSeconds(timeBetweenSpawns);
+                    yield return new WaitForSeconds(_timeBetweenSpawns);
                 }
             }
 
@@ -84,7 +88,7 @@ namespace BadJuja.LevelManagement {
             {
                 if (_enemyCount <= 0)
                 {
-                    PlayerRelatedEvents.Send_OnPlayerClearedTheRoom();
+                    PlayerRelatedEvents.Send_OnClearedTheRoom();
                     break;
                 }
                 yield return new WaitForSeconds(1f);
@@ -93,14 +97,14 @@ namespace BadJuja.LevelManagement {
 
         bool IsInView(Vector3 position)
         {
-            Vector3 viewportPoint = playerCamera.WorldToViewportPoint(position);
+            Vector3 viewportPoint = _playerCamera.WorldToViewportPoint(position);
             return viewportPoint.z > 0 && viewportPoint.x > 0 && viewportPoint.x < 1 && viewportPoint.y > 0 && viewportPoint.y < 1;
         }
         private Transform GetValidSpawnPoint()
         {
             Transform validPoint = null;
 
-            List<Transform> validSpawnPoints = new List<Transform>(spawnPoints);
+            List<Transform> validSpawnPoints = new List<Transform>(_enemySpawnPoints);
 
             while(validPoint == null)
             {

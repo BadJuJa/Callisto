@@ -69,7 +69,28 @@ namespace BadJuja.Enemy {
         protected float CalculateDamage()
         {
             float baseDamage = _stats.GetStatValue(AllCharacterStats.Damage);
-            return 0;
+            float elementalMult = 1 + GetPlayerElementalBonus();
+
+            return baseDamage * elementalMult;
         }
+
+        private float GetPlayerElementalBonus()
+        {
+            float elementalBonus = 0;
+            switch (_data.Element.Element)
+            {
+                case WeaponElements.Fire:
+                    elementalBonus = _stats.GetStatValue(AllCharacterStats.FireDamage);
+                    break;
+                case WeaponElements.Frost:
+                    elementalBonus = _stats.GetStatValue(AllCharacterStats.FrostDamage);
+                    break;
+                case WeaponElements.Shock:
+                    elementalBonus = _stats.GetStatValue(AllCharacterStats.ShockDamage);
+                    break;
+            }
+            return elementalBonus / 100;
+        }
+
     }
 }

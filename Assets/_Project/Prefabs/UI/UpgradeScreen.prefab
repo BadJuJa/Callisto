@@ -128,5 +128,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ee437c1328987d443be413dab370a70c, type: 2}
   - {fileID: 11400000, guid: fc1478104c47a2b419892b4029211b58, type: 2}
   - {fileID: 11400000, guid: 0debe54daf7230041a2d48bc78cbdb2c, type: 2}
-  Player: {fileID: 0}
-  CardPrefab: {fileID: 342802640465615078, guid: 1fd7f8fd1eeae804eb54b5e546fabad2, type: 3}
+  CardPrefab: {fileID: 342802640465615078, guid: 1fd7f8fd1eeae804eb54b5e546fabad2,
+    type: 3}
+  CardsPerLevel: 5

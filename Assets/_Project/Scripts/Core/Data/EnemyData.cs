@@ -18,6 +18,7 @@ namespace BadJuja.Core.Data {
         public float ExperienceReward;
 
         [Header("Stats")]
-        public Lists.CharacterModifierPreset BaseStatsOverride;
+        public ElementData Element;
+        public Lists.EnemyStatsOverridePreset StatsOverride;
     }
 }

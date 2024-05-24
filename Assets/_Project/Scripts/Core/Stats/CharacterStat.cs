@@ -12,7 +12,7 @@ namespace BadJuja.Core.CharacterStats {
 
         protected bool isDirty = true;
         protected float lastBaseValue;
-        protected float _value;
+        protected float value;
 
         protected readonly List<StatModifier> statModifiers;
 
@@ -37,14 +37,14 @@ namespace BadJuja.Core.CharacterStats {
                 if (isDirty || lastBaseValue != BaseValue)
                 {
                     lastBaseValue = BaseValue;
-                    _value = CalculateFinalValue();
-                    if (MaxValue > 0 && _value > MaxValue)
+                    value = CalculateFinalValue();
+                    if (MaxValue > 0 && value > MaxValue)
                     {
-                        _value = MaxValue;
+                        value = MaxValue;
                     }
                     isDirty = false;
                 }
-                return _value;
+                return value;
             }
         }
 

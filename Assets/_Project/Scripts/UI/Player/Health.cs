@@ -42,7 +42,7 @@ namespace BadJuja.UI.Player {
 
             slider.value = fillValue;
 
-            text.SetText($"{currenValue}/{maxValue}");
+            text.SetText($"{(int)currenValue}/{(int)maxValue}");
         }
     }
 }

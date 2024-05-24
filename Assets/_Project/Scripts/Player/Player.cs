@@ -8,44 +8,44 @@ namespace BadJuja.Player {
     public class Player : MonoBehaviour, IDamagable, IStats {
 
         [Header("General")]
-        public float PlayerStatCheckDelay = 1f;
+        public float StatCheckDelay = 1f;
 
         [Header("Stats")]
         [SerializeField] private CharacterStatStructure _stats = new();
-        public float GetStatValue(AllCharacterStats stat)
-        {
-            return _stats.GetStatValue(stat);
-        }
+
+        float IStats.GetStatValue(AllCharacterStats stat) => _stats.GetStatValue(stat);
+        float IStats.GetElementalResistance(WeaponElements damageElement) => _stats.GetElementalResistance(damageElement);
+        float IStats.GetElementalBonus(WeaponElements damageElement) => _stats.GetElementalBonus(damageElement);
+
         private float _lastMaxHealth;
         private float _currentHealth = 0;
 
         #region Experience
 
         private int _level = 1;
-        private float _currentExperience = 0;
-        private float baseXpForLevel = 100f;
-        private float xpForLevelMult = 1.25f;
+        private int _currentExperience = 0;
+        private int _baseXpForLevel = 100;
+        private float _xpForLevelMult = 1.25f;
 
-        private float _xpToNextLevel {
+        private int XpToNextLevel {
             get {
-                return _level * baseXpForLevel * xpForLevelMult;
+                return (int)(_level * _baseXpForLevel * _xpForLevelMult);
             }
         }
-        private void AddExperience(float xpValue)
+        private void AddExperience(int xpValue)
         {
             _currentExperience += xpValue;
-            if (_currentExperience >= _xpToNextLevel)
+            if (_currentExperience >= XpToNextLevel)
             {
-                _currentExperience -= _xpToNextLevel;
+                _currentExperience -= XpToNextLevel;
                 _level++;
-                PlayerRelatedEvents.Send_OnPlayerLevelIncreased();
+                PlayerRelatedEvents.Send_OnLevelIncreased();
             }
-            PlayerRelatedEvents.Send_OnPlayerExperienceChanged(_currentExperience, _xpToNextLevel);
+            
+            PlayerRelatedEvents.Send_OnExperienceChanged(_currentExperience, XpToNextLevel);
         }
 
         #endregion
-        
-
         private void OnDestroy()
         {
             UnsubscribeFromEvents();
@@ -61,8 +61,7 @@ namespace BadJuja.Player {
             var modList = playerCurrentEquipment.CharacterBonusModifiers.CharacterModifiers;
             foreach (var mod in modList)
             {
-                StatModifier newStatMod = new(mod.Strenght, mod.ModType, this);
-                ApplyStatMod(mod.Stat, newStatMod);
+                ApplyStatMod(mod.Stat, new(mod.Strenght, mod.ModType, this));
             }
 
             SubscribeToEvents();
@@ -70,13 +69,13 @@ namespace BadJuja.Player {
 
         private void Start()
         {
-            PlayerRelatedEvents.Send_OnPlayerHealthChanged(_currentHealth, _lastMaxHealth);
+            PlayerRelatedEvents.Send_OnHealthChanged(_currentHealth, _lastMaxHealth);
         }
 
-        public PlayerModel InstantiateModel(GameObject model)
+        public Visuals.Model InstantiateModel(GameObject model)
         {
             var go = Instantiate(model, transform, false);
-            return go.GetComponent<PlayerModel>();
+            return go.GetComponent<Visuals.Model>();
         }
 
         private void SubscribeToEvents()
@@ -93,35 +92,53 @@ namespace BadJuja.Player {
             ModifiersRelaterEvents.RemovePlayerModifier -= RemoveStatMod;
         }
 
-        public void TakeDamage(float value)
+        public void TakeDamage(float value, WeaponElements damageElement)
         {
-            value = Mathf.Clamp(value - _stats.GetStatValue(AllCharacterStats.Armor), 1, value);
+            value = ApplyResistance(value, damageElement);
 
             if (value < _currentHealth)
                 _currentHealth -= value;
             else
                 Die();
 
-            PlayerRelatedEvents.Send_OnPlayerHealthChanged(_currentHealth, _stats.GetStatValue(AllCharacterStats.Health));
+            PlayerRelatedEvents.Send_OnHealthChanged(_currentHealth, _stats.GetStatValue(AllCharacterStats.Health));
+        }
+
+        private float ApplyResistance(float value = 0, WeaponElements damageElement = WeaponElements.Physical)
+        {
+            if (damageElement == WeaponElements.Physical)
+                value = Mathf.Clamp(value - _stats.GetStatValue(AllCharacterStats.Armor), 1, value);
+            else
+                value *= 1 - _stats.GetElementalResistance(damageElement) / 100;
+            
+            return value;
         }
 
         private void Die()
         {
-
+            PlayerRelatedEvents.Send_OnDeath();
         }
 
-        public void ApplyStatMod(AllCharacterStats stat, StatModifier mod, object source = null)
+        private void ApplyStatMod(AllCharacterStats stat, StatModifier mod, object source = null)
         {
             if (mod.Source == null)
-                mod = new(mod.Value, mod.Type, this);
-            
+                mod = new(mod.Value, mod.Type, source ?? this);
+
+            if (stat == AllCharacterStats.Damage)
+            {
+                if (mod.Source.GetType() == typeof(Combat))
+                    mod = new(mod.Value, mod.Type, mod.Source);
+                else
+                    mod = new(mod.Value / 100, StatModType.PercentAdd, mod.Source);
+            }
+
             _stats.ApplyMod(stat, mod);
 
             if (stat == AllCharacterStats.Health)
                 PlayerStatsCheck();
         }
 
-        public void RemoveStatMod(AllCharacterStats stat, object source)
+        private void RemoveStatMod(AllCharacterStats stat, object source)
         {
             _stats.RemoveMod(stat, source);
 
@@ -143,10 +160,8 @@ namespace BadJuja.Player {
                 {
                     _currentHealth += difference;
                 }
-                PlayerRelatedEvents.Send_OnPlayerHealthChanged(_currentHealth, _stats.GetStatValue(AllCharacterStats.Health));
+                PlayerRelatedEvents.Send_OnHealthChanged(_currentHealth, _stats.GetStatValue(AllCharacterStats.Health));
             }
         }
-
-        
     }
 }

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="BadJuja.Player.Combat">
+    <Position X="6" Y="1" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAERAIAQAAAQAQAAAEAAAAAAAgAAAEIsAACAAAAAChg=</HashCode>
+      <FileName>Assets\_Project\Scripts\Player\Combat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BadJuja.Player.Movement">
+    <Position X="10.25" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQRQAAAAIIAAQAAAAAAIABAAMAAAAAAAAAAAEEBAAA=</HashCode>
+      <FileName>Assets\_Project\Scripts\Player\Movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BadJuja.Player.Player" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAlAAAACCAQAQAgQAAASRAAAAAFAQAwCAAAiAAAABg=</HashCode>
+      <FileName>Assets\_Project\Scripts\Player\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -20,6 +20,8 @@ namespace BadJuja.Enemy {
         private CharacterStatStructure _stats = new();
 
         public float GetStatValue(AllCharacterStats stat) => _stats.GetStatValue(stat);
+        public float GetElementalResistance(WeaponElements damageElement) => _stats.GetElementalResistance(damageElement);
+        public float GetElementalBonus(WeaponElements damageElement) => _stats.GetElementalBonus(damageElement);
 
         private float _currentHealth;
         
@@ -31,7 +33,6 @@ namespace BadJuja.Enemy {
         public void Initialize(EnemyData data)
         {
             _data = data;
-            object a = new();
             
             _enemyMovement = GetComponent<Movement>();
 
@@ -39,15 +40,18 @@ namespace BadJuja.Enemy {
 
             _stats.Init();
 
-            if (_data.BaseStatsOverride != null)
+            if (_data.StatsOverride != null)
             {
-                var modList = _data.BaseStatsOverride.CharacterModifiers;
+                var modList = _data.StatsOverride.Overrides;
                 foreach (var mod in modList)
                 {
-                    StatModifier newStatMod = new(mod.ModType == StatModType.PercentAdd ? mod.Strenght / 100 : mod.Strenght, mod.ModType, this);
-                    _stats.ApplyMod(mod.Stat, newStatMod);
+                    if (mod.Stat == AllCharacterStats.Damage)
+                        _stats.ApplyMod(mod.Stat, new(mod.Strenght / 100, StatModType.PercentAdd, this));
+                    else
+                        _stats.ApplyMod(mod.Stat, new(mod.Strenght, mod.ModType, this));
                 }
             }
+            _stats.ApplyMod(AllCharacterStats.Damage, new(_data.Damage, StatModType.Flat, this));
 
             _currentHealth = _stats.GetStatValue(AllCharacterStats.Health);
 
@@ -68,9 +72,9 @@ namespace BadJuja.Enemy {
             _enemyAttack.Initialize(_data, this, AttackPoint, animatorController);
         }
 
-        public void TakeDamage(float value)
+        public void TakeDamage(float value, WeaponElements damageElement)
         {
-            value = Mathf.Clamp(value - _stats.GetStatValue(AllCharacterStats.Armor), 1, value);
+            value = ApplyResistance(value, damageElement);
 
             if (value < _currentHealth)
                 _currentHealth -= value;
@@ -80,9 +84,29 @@ namespace BadJuja.Enemy {
             healthBar.UpdateHealth(HealthPercentage);
         }
 
+        private float ApplyResistance(float value = 0, WeaponElements damageElement = WeaponElements.Physical)
+        {
+            switch (damageElement)
+            {
+                case WeaponElements.Fire:
+                    value *= 1 - _stats.GetStatValue(AllCharacterStats.FireResistance) / 100;
+                    break;
+                case WeaponElements.Frost:
+                    value *= 1 - _stats.GetStatValue(AllCharacterStats.FrostResistance) / 100;
+                    break;
+                case WeaponElements.Shock:
+                    value *= 1 - _stats.GetStatValue(AllCharacterStats.ShockResistance) / 100;
+                    break;
+                case WeaponElements.Physical:
+                    value = Mathf.Clamp(value - _stats.GetStatValue(AllCharacterStats.Armor), 1, value);
+                    break;
+            }
+            return value;
+        }
+
         private void Die()
         {
-            EnemyRelatedEvents.Send_OnEnemyDied(EnemyData.ExperienceReward);
+            EnemyRelatedEvents.Send_OnEnemyDied((int)EnemyData.ExperienceReward);
             Destroy(gameObject);
         }
     }

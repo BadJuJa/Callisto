@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace BadJuja.LevelManagement {
     public class ExitControls : MonoBehaviour {
-        public GameObject LockedExit;
-        public GameObject UnlockedExit;
 
-        public GameObject ShinyExit;
+        [SerializeField] private GameObject[] ObjectsToEnable;
+        [SerializeField] private GameObject[] ObjectsToDisable;
 
         private void OnEnable()
         {
@@ -18,12 +17,10 @@ namespace BadJuja.LevelManagement {
             PlayerRelatedEvents.PlayerClearedTheRoom -= UnlockExit;
         }
 
-
         public void UnlockExit()
         {
-            LockedExit.SetActive(false);
-            UnlockedExit.SetActive(true);
-            ShinyExit.SetActive(true);
+            foreach (GameObject item in ObjectsToEnable) item.SetActive(true);
+            foreach (GameObject item in ObjectsToDisable) item.SetActive(false);
         }
     }
 }

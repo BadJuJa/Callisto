@@ -592,16 +592,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7850826256045260249, guid: 430495bf5d0c3c94e975d6f49a1333d5,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7850826256045260249, guid: 430495bf5d0c3c94e975d6f49a1333d5,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -912,7 +902,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 739015891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d74aa474286ce38489e8fe645608b280, type: 3}
+  m_Script: {fileID: 11500000, guid: af1e138d4623b68408b8beb8d40e2f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   easeSlider: {fileID: 1265689264}
@@ -1816,11 +1806,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1118474986}
     m_Modifications:
-    - target: {fileID: 1342354713433414590, guid: 94266b3cb0f5e094caffbf225c2e358d,
-        type: 3}
-      propertyPath: CardsPerLevel
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 3858055489359023992, guid: 94266b3cb0f5e094caffbf225c2e358d,
         type: 3}
       propertyPath: m_Name
@@ -2471,7 +2456,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1958788369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3e4f7cedd663e54fa6d3b60e78a3926, type: 3}
+  m_Script: {fileID: 11500000, guid: 075c5982fa67fa349b62c199a852ad0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 860420923}

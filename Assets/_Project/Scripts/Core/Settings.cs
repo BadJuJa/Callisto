@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BadJuja.Core.Settings
 {
 
-    public enum DiffecultyLevel
+    public enum DifficultyLevel
     {
         Easy,
         Normal,
@@ -13,6 +13,6 @@ namespace BadJuja.Core.Settings
     [CreateAssetMenu(fileName = "Game Settings", menuName = "Game Settings")]
     public class Settings : ScriptableObject
     {
-        public DiffecultyLevel DiffecultyLevel = DiffecultyLevel.Normal;
+        public DifficultyLevel DiffecultyLevel = DifficultyLevel.Normal;
     }
 }

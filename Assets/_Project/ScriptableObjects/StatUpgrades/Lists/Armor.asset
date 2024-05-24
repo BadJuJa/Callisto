@@ -16,10 +16,10 @@ MonoBehaviour:
   ModType: 100
   upgradeRarities:
   - Rarity: {fileID: 11400000, guid: 049fb8dc20301c441ae178f28fc07b83, type: 2}
-    Strength: 3
+    Strength: 2
   - Rarity: {fileID: 11400000, guid: 032672a3543376248926eab7035fac59, type: 2}
-    Strength: 6
+    Strength: 4
   - Rarity: {fileID: 11400000, guid: 2c63e89f1769b4c45a418208ddb9808b, type: 2}
-    Strength: 9
+    Strength: 6
   - Rarity: {fileID: 11400000, guid: f51810c03413aed4e888699e3994c17c, type: 2}
-    Strength: 12
+    Strength: 8

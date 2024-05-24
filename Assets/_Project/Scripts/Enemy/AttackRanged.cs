@@ -44,7 +44,7 @@ namespace BadJuja.Enemy {
                 _attackPoint.position,
                 Quaternion.LookRotation(_attackPoint.forward),
                 _attackPoint
-            ).GetComponent<Projectile>().Initialize(CalculateDamage());
+            ).GetComponent<Projectile>().Initialize(CalculateDamage(), _data.Element.Element);
             
             base.Attack();
         }

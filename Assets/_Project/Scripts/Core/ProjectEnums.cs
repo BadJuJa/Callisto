@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace BadJuja.Core
 {
     public enum AllCharacterStats {
@@ -30,7 +32,8 @@ namespace BadJuja.Core
     {
         Fire,
         Frost,
-        Shock
+        Shock,
+        Physical
     }
 
     public enum RangedWeaponBehaviour

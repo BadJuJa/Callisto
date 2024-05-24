@@ -44,5 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d55abe9be248a449be0768da309e6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UISceneIndex: 2
+  PlayerCurrentEquipment: {fileID: 11400000, guid: e27dde8851e7d7148b67a2a5c0699db6,
+    type: 2}
   Player: {fileID: 0}
   PlayerCombat: {fileID: 0}
+  PlayerMovement: {fileID: 0}
+  LevelManager: {fileID: 0}

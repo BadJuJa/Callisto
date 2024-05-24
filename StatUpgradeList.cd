@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="BadJuja.Core.CharacterStats.StatUpgradeList">
+    <Position X="3.25" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAQAAAAAAAAAAAAAAAgAAAAICAABAAAE=</HashCode>
+      <FileName>Assets\_Project\Scripts\Core\Stats\StatUpgradeList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BadJuja.Core.CharacterStats.StatUpgradeRarity">
+    <Position X="8.75" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Project\Scripts\Core\Stats\StatUpgradeRarity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="BadJuja.Core.CharacterStats.UpgradeRarity">
+    <Position X="6.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Project\Scripts\Core\Stats\StatUpgradeList.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -27,8 +27,10 @@ namespace BadJuja.Core.CharacterStats
         [SerializeField] private CharacterStat FrostResistance = new(0, 80);
         [SerializeField] private CharacterStat ShockResistance = new(0, 80);
 
-        protected Dictionary<AllCharacterStats, CharacterStat> Stats = new();
+        protected Dictionary<AllCharacterStats, CharacterStat> Stats;
 
+        protected Dictionary<WeaponElements, AllCharacterStats> ElementalResistanceDict;
+        protected Dictionary<WeaponElements, AllCharacterStats> ElementalBonusDict;
         public float GetStatValue(AllCharacterStats characterStat)
         {
             if (!isInitialized)
@@ -37,9 +39,25 @@ namespace BadJuja.Core.CharacterStats
             return value;
         }
 
+        public float GetElementalResistance(WeaponElements damageElement)
+        {
+            if (ElementalResistanceDict.TryGetValue(damageElement, out AllCharacterStats resistanceStat)) 
+                return GetStatValue(resistanceStat);
+            else 
+                return 0;
+        }
+
+        public float GetElementalBonus(WeaponElements damageElement)
+        {
+            if (ElementalBonusDict.TryGetValue(damageElement, out AllCharacterStats bonusStat))
+                return GetStatValue(bonusStat);
+            else
+                return 0;
+        }
+
         public void Init()
         {
-            FillStatsDictionary();
+            FillDictionaries();
             
             for (int i = 0; i < Enum.GetValues(typeof(AllCharacterStats)).Length; i++)
             {
@@ -62,24 +80,37 @@ namespace BadJuja.Core.CharacterStats
             return returnValue;
         }
 
-        private void FillStatsDictionary()
+        private void FillDictionaries()
         {
-            Stats.Add(AllCharacterStats.Health, Health);
-            Stats.Add(AllCharacterStats.Armor, Armor);
-            Stats.Add(AllCharacterStats.MovementSpeed, MovementSpeed);
+            Stats = new()
+            {
+                { AllCharacterStats.Health, Health },
+                { AllCharacterStats.Armor, Armor },
+                { AllCharacterStats.MovementSpeed, MovementSpeed },
+                { AllCharacterStats.Damage, Damage },
+                { AllCharacterStats.CritChance, CritChance },
+                { AllCharacterStats.CritDamage, CritDamage },
+                { AllCharacterStats.FireDamage, FireDamage },
+                { AllCharacterStats.FrostDamage, FrostDamage },
+                { AllCharacterStats.ShockDamage, ShockDamage },
+                { AllCharacterStats.FireResistance, FireResistance },
+                { AllCharacterStats.FrostResistance, FrostResistance },
+                { AllCharacterStats.ShockResistance, ShockResistance },
+            };
 
-            Stats.Add(AllCharacterStats.Damage, Damage);
+            ElementalResistanceDict = new()
+            {
+                { WeaponElements.Fire, AllCharacterStats.FireResistance },
+                { WeaponElements.Frost, AllCharacterStats.FrostResistance },
+                { WeaponElements.Shock, AllCharacterStats.ShockResistance },
+            };
 
-            Stats.Add(AllCharacterStats.CritChance, CritChance);
-            Stats.Add(AllCharacterStats.CritDamage, CritDamage);
-
-            Stats.Add(AllCharacterStats.FireDamage, FireDamage);
-            Stats.Add(AllCharacterStats.FrostDamage, FrostDamage);
-            Stats.Add(AllCharacterStats.ShockDamage, ShockDamage);
-
-            Stats.Add(AllCharacterStats.FireResistance, FireResistance);
-            Stats.Add(AllCharacterStats.FrostResistance, FrostResistance);
-            Stats.Add(AllCharacterStats.ShockResistance, ShockResistance);
+            ElementalBonusDict = new()
+            {
+                { WeaponElements.Fire, AllCharacterStats.FireDamage },
+                { WeaponElements.Frost, AllCharacterStats.FrostDamage },
+                { WeaponElements.Shock, AllCharacterStats.ShockDamage },
+            };
         }
     }
 }

@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9493d21dcf715a64b99a0604a0c01be7, type: 3}
   m_Name: Player Current Equipment
   m_EditorClassIdentifier: 
-  Model: {fileID: 1215125796393529438, guid: 2e2e28556f3d1ac4687df6ebd4652cbf, type: 3}
+  Model: {fileID: 3203798667220903457, guid: 195faad52d843ec478f411967d6c80d9, type: 3}
   LightRangedWeaponData: {fileID: 11400000, guid: 388e65e64784b29419a0e85ffeee62be,
     type: 2}
-  LightRangedWeaponElement: {fileID: 11400000, guid: b468dc4c9a91bd545bd3197965381010,
+  LightRangedWeaponElement: {fileID: 11400000, guid: af799ba253768844fa033f07e48f97bc,
     type: 2}
-  HeavyRangedWeaponData: {fileID: 11400000, guid: 1dc0d437bacbdbc48898dfeb5390c510,
+  HeavyRangedWeaponData: {fileID: 11400000, guid: 428b78db6bc40ef418f55fd600095105,
     type: 2}
-  HeavyRangedWeaponElement: {fileID: 11400000, guid: b468dc4c9a91bd545bd3197965381010,
+  HeavyRangedWeaponElement: {fileID: 11400000, guid: af799ba253768844fa033f07e48f97bc,
     type: 2}
-  MeleeWeaponData: {fileID: 11400000, guid: 88a7d8a203729dd4285d662fc879a505, type: 2}
-  MeleeWeaponElement: {fileID: 11400000, guid: b468dc4c9a91bd545bd3197965381010, type: 2}
-  CharacterBonusModifiers: {fileID: 11400000, guid: 96530c563690f32488ae8259bc2adc5c,
+  MeleeWeaponData: {fileID: 11400000, guid: 8fee84d9b1325274a8da8e90deaa7aea, type: 2}
+  MeleeWeaponElement: {fileID: 11400000, guid: af799ba253768844fa033f07e48f97bc, type: 2}
+  CharacterBonusModifiers: {fileID: 11400000, guid: 5d6602a583da307429b4ab165d7ae277,
     type: 2}
