@@ -940,7 +940,6 @@ GameObject:
   - component: {fileID: 3471781140705856045}
   - component: {fileID: 47328567143168078}
   - component: {fileID: 130723808592176041}
-  - component: {fileID: 4581192034639265750}
   - component: {fileID: 2464458379621802962}
   m_Layer: 0
   m_Name: Frost Char Model
@@ -1000,19 +999,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9903bde8639dc804b8bfbe70915bc86c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputHandler: {fileID: 0}
---- !u!114 &4581192034639265750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3203798667220903457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4779a8a7ac2f0b46926fd73f26e2f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2464458379621802962

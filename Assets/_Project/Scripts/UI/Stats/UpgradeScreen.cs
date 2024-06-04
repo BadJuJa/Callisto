@@ -35,6 +35,11 @@ namespace BadJuja.UI {
             PlayerRelatedEvents.OnLevelIncrease += EnableCards;
         }
 
+        private void OnDestroy()
+        {
+            PlayerRelatedEvents.OnLevelIncrease -= EnableCards;
+        }
+
         public void ApplyModifier(AllCharacterStats stat, StatModType type, float strenght)
         {
 

@@ -4,14 +4,14 @@ using BadJuja.Core.Data;
 using UnityEngine;
 
 namespace BadJuja.Enemy {
-    public class AttackRanged : AttackBase {
+    public class CombatRanged : CombatBase {
 
         protected CharacterController _playerCC;
         protected Transform _parentTransform;
-        protected Projectile _enemyProjectileData;
+        protected Projectile _projectileData;
         protected float _spreadAngle = 7.5f;
 
-        public AttackRanged(Transform parentTransform, MonoBehaviour context, IEnemyCentral enemyCentral) : base(context, enemyCentral)
+        public CombatRanged(Transform parentTransform, MonoBehaviour context, IEnemyCentral enemyCentral) : base(context, enemyCentral)
         {
             _parentTransform = parentTransform;
             _playerCC = _centralInterface.PlayerTransform.gameObject.GetComponent<CharacterController>();
@@ -20,7 +20,7 @@ namespace BadJuja.Enemy {
         public override void Initialize(EnemyData Data, IStats stats, Transform attackPoint, AnimatorControllerScript animatorController)
         {
             base.Initialize(Data, stats, attackPoint, animatorController);
-            _enemyProjectileData = _data.AttackProjectilePrefab.GetComponent<Projectile>();
+            _projectileData = _data.AttackProjectilePrefab.GetComponent<Projectile>();
         }
 
         public override void Attack()
@@ -29,7 +29,7 @@ namespace BadJuja.Enemy {
                         _centralInterface.PlayerTransform.position,
                         _playerCC.velocity,
                         _parentTransform.position,
-                        _enemyProjectileData.ProjectileData.Speed);
+                        _projectileData.ProjectileData.Speed);
             
             Vector3 direction = targetPosition - _parentTransform.position;
 

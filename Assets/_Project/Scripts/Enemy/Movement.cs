@@ -6,18 +6,21 @@ namespace BadJuja.Enemy {
     [RequireComponent(typeof(NavMeshAgent))]
     public class Movement : MonoBehaviour {
         private NavMeshAgent _agent;
-        private IEnemyCentral _enemyCentralInterface;
+        private IEnemyCentral _centralInterface;
 
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _enemyCentralInterface = GetComponent<IEnemyCentral>();
+            _centralInterface = GetComponent<IEnemyCentral>();
         }
         private void Update()
         {
-            if (_enemyCentralInterface.PlayerTransform == null) return;
+            _agent.isStopped = !GameManager.GameIsPaused;
+            if (GameManager.GameIsPaused) return;
 
-            if (!_enemyCentralInterface.PlayerInReachDistance)
+            if (_centralInterface.PlayerTransform == null) return;
+
+            if (!_centralInterface.PlayerInReachDistance)
             {
                 MoveTowardsPlayer();
             }
@@ -27,10 +30,10 @@ namespace BadJuja.Enemy {
             }
         }
 
-        void MoveTowardsPlayer()
+        private void MoveTowardsPlayer()
         {
             _agent.isStopped = false;
-            _agent.SetDestination(_enemyCentralInterface.PlayerTransform.position);
+            _agent.SetDestination(_centralInterface.PlayerTransform.position);
         }
 
         public void SetSpeed(float value)

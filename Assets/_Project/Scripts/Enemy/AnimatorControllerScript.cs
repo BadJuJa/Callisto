@@ -1,3 +1,4 @@
+using BadJuja.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,7 +8,7 @@ namespace BadJuja.Enemy {
 
         private Animator _animator;
 
-        private AttackBase _attackSctipt;
+        private CombatBase _attackSctipt;
 
         int velocityParamHash = Animator.StringToHash("Velocity");
         int attackTriggerParamHash = Animator.StringToHash("AttackTrigger");
@@ -18,13 +19,15 @@ namespace BadJuja.Enemy {
             _animator = GetComponent<Animator>();
         }
 
-        public void Initialize(AttackBase enemyAttack)
+        public void Initialize(CombatBase enemyAttack)
         {
             _attackSctipt = enemyAttack;
         }
 
         private void LateUpdate()
         {
+            if (GameManager.GameIsPaused) return;
+
             _animator.SetFloat(velocityParamHash, _agent.velocity.magnitude);
         }
 

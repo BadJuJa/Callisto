@@ -2,11 +2,11 @@ using BadJuja.Core;
 using UnityEngine;
 
 namespace BadJuja.Enemy {
-    public class AttackMelee : AttackBase {
+    public class CombatMelee : CombatBase {
 
         private LayerMask _playerLayer;
 
-        public AttackMelee(MonoBehaviour context, IEnemyCentral enemyCentral) : base(context, enemyCentral)
+        public CombatMelee(MonoBehaviour context, IEnemyCentral enemyCentral) : base(context, enemyCentral)
         {
             _playerLayer = LayerMask.GetMask("Player");
         }

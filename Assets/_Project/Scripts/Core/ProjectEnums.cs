@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace BadJuja.Core
 {
     public enum AllCharacterStats {
@@ -15,7 +13,7 @@ namespace BadJuja.Core
         FireResistance,
         FrostResistance,
         ShockResistance,
-}
+    }
 
     public enum EnemyTypes {
         Melee,

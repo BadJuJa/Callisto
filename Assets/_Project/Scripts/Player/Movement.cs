@@ -1,42 +1,42 @@
 using BadJuja.Core;
+using BadJuja.Core.CharacterStats;
 using UnityEngine;
 
 namespace BadJuja.Player {
     [RequireComponent(typeof(CharacterController))]
     public class Movement : MonoBehaviour {
 
-        [Header("References")]
+        [Header("Parameters")]
+        [SerializeField] private float _turnSpeed = 360;
+        
         private Transform _modelTransform;
         private CharacterController _controller;
         private InputHandler _input;
 
-        [Header("Parameters")]
-        [SerializeField] private float _movementSpeed = 5;
-        [SerializeField] private float _turnSpeed = 360;
-
-        [Header("Inner usage")]
         private Vector3 playerVelocity;
         private float _correctSpeed;
-        private bool groundedPlayer;
 
-        public void Initialize(Transform modelTransform)
+        private IStats _stats;
+
+        public void Initialize(Transform modelTransform, IStats stats)
         {
             _modelTransform = modelTransform;
             _input = GameManager.InputHandler;
             _controller = gameObject.GetComponent<CharacterController>();
+            _stats = stats;
         }
 
         private void Update()
         {
             if (_input.MoveInputVector != Vector2.zero)
             {
-                _correctSpeed = _movementSpeed / _input.MoveInputVector.ToZXVector3().magnitude;
+                _correctSpeed = _stats.GetStatValue(AllCharacterStats.MovementSpeed)
+                                / _input.MoveInputVector.ToZXVector3().magnitude;
             }
 
             CheckGrounded();
             Move();
             ApplyGravity();
-
             Look();
         }
 
@@ -73,8 +73,7 @@ namespace BadJuja.Player {
 
         private void CheckGrounded()
         {
-            groundedPlayer = _controller.isGrounded;
-            if (groundedPlayer && playerVelocity.y < 0)
+            if (_controller.isGrounded && playerVelocity.y < 0)
             {
                 playerVelocity.y = 0f;
             }

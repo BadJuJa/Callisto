@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 889398198922857995}
   - component: {fileID: 5991595087723183151}
   - component: {fileID: 3844753421270118016}
+  - component: {fileID: 5237190393337292731}
   m_Layer: 31
   m_Name: Player
   m_TagString: Player
@@ -349,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189ea0c58c88f064d9bc2c98499742ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerStatCheckDelay: 1
+  StatCheckDelay: 1
   _stats:
     Health:
       BaseValue: 100
@@ -387,6 +388,18 @@ MonoBehaviour:
     ShockResistance:
       BaseValue: 0
       MaxValue: 0
+--- !u!114 &5237190393337292731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649080417831694756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5f429460d5b7c545a86200635defdb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6121038488114093743
 GameObject:
   m_ObjectHideFlags: 0

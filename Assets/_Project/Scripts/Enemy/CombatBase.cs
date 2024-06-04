@@ -5,21 +5,20 @@ using System.Collections;
 using UnityEngine;
  
 namespace BadJuja.Enemy {
-    public abstract class AttackBase {
+    public abstract class CombatBase {
         
         private AnimatorControllerScript _animatorController;
         private MonoBehaviour _context;
         private Timer _timer;
         
-        private IStats _stats;
-        private float _attackInterval;
+        private IStats _stats;        
         private bool _canAttack = false;
 
         protected IEnemyCentral _centralInterface;
         protected Transform _attackPoint;
         protected EnemyData _data;
 
-        protected AttackBase(MonoBehaviour context, IEnemyCentral enemyCentral)
+        protected CombatBase(MonoBehaviour context, IEnemyCentral enemyCentral)
         {
             _context = context;
 
@@ -35,15 +34,13 @@ namespace BadJuja.Enemy {
             _stats = stats;
             _attackPoint = attackPoint;
             _animatorController = animatorController;
-
-            _attackInterval = _data.AttackCooldown;
             
             StartCounting();
         }
 
         private void StartCounting()
         {
-            _timer.Set(_attackInterval);
+            _timer.Set(_data.AttackCooldown);
             _timer.StartCountingTime();
         }
 
@@ -69,28 +66,9 @@ namespace BadJuja.Enemy {
         protected float CalculateDamage()
         {
             float baseDamage = _stats.GetStatValue(AllCharacterStats.Damage);
-            float elementalMult = 1 + GetPlayerElementalBonus();
+            float elementalMult = 1 + _stats.GetElementalBonus(_data.Element.Element) / 100;
 
             return baseDamage * elementalMult;
         }
-
-        private float GetPlayerElementalBonus()
-        {
-            float elementalBonus = 0;
-            switch (_data.Element.Element)
-            {
-                case WeaponElements.Fire:
-                    elementalBonus = _stats.GetStatValue(AllCharacterStats.FireDamage);
-                    break;
-                case WeaponElements.Frost:
-                    elementalBonus = _stats.GetStatValue(AllCharacterStats.FrostDamage);
-                    break;
-                case WeaponElements.Shock:
-                    elementalBonus = _stats.GetStatValue(AllCharacterStats.ShockDamage);
-                    break;
-            }
-            return elementalBonus / 100;
-        }
-
     }
 }

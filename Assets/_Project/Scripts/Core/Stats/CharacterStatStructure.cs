@@ -13,32 +13,26 @@ namespace BadJuja.Core.CharacterStats
         [SerializeField] private CharacterStat Health = new(100);
         [SerializeField] private CharacterStat Armor = new(0);
         [SerializeField] private CharacterStat MovementSpeed = new(5);
-
         [SerializeField] private CharacterStat Damage = new(0);
-
         [SerializeField] private CharacterStat CritChance = new(5);
         [SerializeField] private CharacterStat CritDamage = new(135);
-
         [SerializeField] private CharacterStat FireDamage = new(0);
         [SerializeField] private CharacterStat FrostDamage = new(0);
         [SerializeField] private CharacterStat ShockDamage = new(0);
-
         [SerializeField] private CharacterStat FireResistance = new(0, 80);
         [SerializeField] private CharacterStat FrostResistance = new(0, 80);
         [SerializeField] private CharacterStat ShockResistance = new(0, 80);
 
-        protected Dictionary<AllCharacterStats, CharacterStat> Stats;
-
+        protected Dictionary<AllCharacterStats, CharacterStat> StatsDict;
         protected Dictionary<WeaponElements, AllCharacterStats> ElementalResistanceDict;
         protected Dictionary<WeaponElements, AllCharacterStats> ElementalBonusDict;
+
         public float GetStatValue(AllCharacterStats characterStat)
         {
             if (!isInitialized)
                 return 0;
-            var value = Stats[characterStat].Value;
-            return value;
+            return StatsDict[characterStat].Value; ;
         }
-
         public float GetElementalResistance(WeaponElements damageElement)
         {
             if (ElementalResistanceDict.TryGetValue(damageElement, out AllCharacterStats resistanceStat)) 
@@ -46,7 +40,6 @@ namespace BadJuja.Core.CharacterStats
             else 
                 return 0;
         }
-
         public float GetElementalBonus(WeaponElements damageElement)
         {
             if (ElementalBonusDict.TryGetValue(damageElement, out AllCharacterStats bonusStat))
@@ -54,35 +47,26 @@ namespace BadJuja.Core.CharacterStats
             else
                 return 0;
         }
-
-        public void Init()
-        {
-            FillDictionaries();
-            
-            for (int i = 0; i < Enum.GetValues(typeof(AllCharacterStats)).Length; i++)
-            {
-                _ = Stats[(AllCharacterStats)i].Value;
-            }
-
-            isInitialized = true;
-        }
-        
         public void ApplyMod(AllCharacterStats stat, StatModifier mod)
         {
-            Stats[stat].AddModifier(mod);
+            StatsDict[stat].AddModifier(mod);
             GetStatValue(stat);
         }
-
         public bool RemoveMod(AllCharacterStats stat, object souce)
         {
-            bool returnValue = Stats[stat].RemoveAllModifiersFromSource(souce);
+            bool returnValue = StatsDict[stat].RemoveAllModifiersFromSource(souce);
             GetStatValue(stat);
             return returnValue;
         }
+        public void Initialize()
+        {
+            FillDictionaries();
 
+            isInitialized = true;
+        }
         private void FillDictionaries()
         {
-            Stats = new()
+            StatsDict = new()
             {
                 { AllCharacterStats.Health, Health },
                 { AllCharacterStats.Armor, Armor },

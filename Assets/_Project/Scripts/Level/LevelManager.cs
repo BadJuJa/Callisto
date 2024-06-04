@@ -6,20 +6,26 @@ using UnityEngine;
 namespace BadJuja.LevelManagement {
     public class LevelManager : MonoBehaviour {
 
-        public DifficultyEscalation DifficultyEscalation;
+        [SerializeField] private DifficultyEscalation DifficultyEscalation;
 
         [Space]
-        public GameObject[] Rooms;
-        public GameObject[] Intersections;
+        [SerializeField] private GameObject[] Rooms;
+        [SerializeField] private GameObject[] Intersections;
         
         [Space, Tooltip("Spawn Intersection every N rooms")]
-        public int IntersectionsFrequency = 5;
+        [SerializeField] private int IntersectionsFrequency = 5;
 
         [Space]
-        public GameObject CurrentRoom;
+        [SerializeField] private GameObject CurrentRoom;
 
         private Transform _playerTransform;
         private int roomIndex = 0;
+
+        private GameObject RoomToSpawn {
+            get {
+                return roomIndex % IntersectionsFrequency + 1 == IntersectionsFrequency ? GetRandomRoom(Intersections) : GetRandomRoom(Rooms);
+            }
+        }
 
         private void OnDestroy()
         {
@@ -73,16 +79,13 @@ namespace BadJuja.LevelManagement {
 
         private void SpawnRoom()
         {
-            GameObject roomToSpawn;
-            roomToSpawn = roomIndex % 6 == 5 ? GetRandomRoom(Intersections) : GetRandomRoom(Rooms);
+            CurrentRoom = Instantiate(RoomToSpawn, Vector3.zero, Quaternion.identity);
 
-            CurrentRoom = Instantiate(roomToSpawn, Vector3.zero, Quaternion.identity);
-
-            if(CurrentRoom.TryGetComponent(out RoomControls roomControls))
+            if(CurrentRoom.TryGetComponent(out IGeneralRoomControl controls))
             {
-                roomControls.Initialize(DifficultyEscalation.GetNextRoomEnemies(roomIndex));
+                controls.Initialize(DifficultyEscalation.GetNextRoomEnemies(roomIndex));
+                roomIndex++;
             }
-            roomIndex++;
         }
     }
 }

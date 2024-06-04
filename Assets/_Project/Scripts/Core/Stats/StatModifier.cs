@@ -2,7 +2,6 @@ namespace BadJuja.Core.CharacterStats {
     public enum StatModType {
         Flat = 100,
         PercentAdd = 200,
-        PercentMult = 300,
     }
 
     public class StatModifier {
@@ -18,11 +17,8 @@ namespace BadJuja.Core.CharacterStats {
             Order = order;
             Source = source;
         }
-
         public StatModifier(float value, StatModType type) : this(value, type, (int)type, null) { }
-
         public StatModifier(float value, StatModType type, int order) : this(value, type, order, null) { }
-
         public StatModifier(float value, StatModType type, object source) : this(value, type, (int)type, source) { }
 
     }

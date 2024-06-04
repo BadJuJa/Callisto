@@ -12,7 +12,7 @@ namespace BadJuja.Core {
         public EnemyList NormalEnemyList;
         public EnemyList HardEnemyList;
 
-        public List<EnemyData> GetNextRoomEnemies(int roomIndex)
+        public EnemyData[] GetNextRoomEnemies(int roomIndex)
         {
             int count = 5 + roomIndex;
 
@@ -42,7 +42,7 @@ namespace BadJuja.Core {
                 result.AddRange(NormalEnemyList.GetRandomEnemies(normalCount));
             if (hardCount > 0)
                 result.AddRange(HardEnemyList.GetRandomEnemies(hardCount));
-            return result;
+            return result.ToArray();
         }
 
     }

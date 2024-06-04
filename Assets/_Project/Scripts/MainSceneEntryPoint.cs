@@ -1,4 +1,8 @@
+using BadJuja.Core.CharacterStats;
 using BadJuja.Core.Data;
+using BadJuja.Player;
+using BadJuja.Player.Visuals;
+using System;
 using UnityEngine;
 
 namespace BadJuja.Core
@@ -14,9 +18,9 @@ namespace BadJuja.Core
         public Player.Player Player;
         public LevelManagement.LevelManager LevelManager;
 
-        private Player.Movement _playerMovement;
-        private Player.Combat _playerCombat;
-
+        private Movement _playerMovement;
+        private Combat _playerCombat;
+        private ExperienceContainer _experienceContainer;
         private void Start()
         {
             Initialize();
@@ -28,18 +32,21 @@ namespace BadJuja.Core
 
             if (Player != null)
                 Player.Initialize(PlayerCurrentEquipment);
+            else
+                throw new NullReferenceException();
 
-            Player.Visuals.Model playerModelComponent = Player.InstantiateModel(PlayerCurrentEquipment.Model);
+            Model playerModelComponent = Model.InstantiateModel(PlayerCurrentEquipment.Model, Player.transform);
 
-            _playerMovement = Player.gameObject.GetComponent<Player.Movement>();
-            _playerMovement.Initialize(playerModelComponent.GetModelTransform());
+            _playerMovement = Player.gameObject.GetComponent<Movement>();
+            _playerMovement.Initialize(playerModelComponent.GetModelTransform(), Player.GetComponent<IStats>());
 
-            if (_playerCombat == null)
-                _playerCombat = Player.GetComponentInChildren<Player.Combat>();
+            _playerCombat = Player.GetComponentInChildren<Combat>();
             _playerCombat.Initialize(playerModelComponent.GetFiringPoint(), PlayerCurrentEquipment);
 
-            if (LevelManager != null)
-                LevelManager.Initialize(Player.transform);
+            _experienceContainer = Player.GetComponentInChildren<ExperienceContainer>();
+            _experienceContainer.Initialize();
+
+            LevelManager.Initialize(Player.transform);
             
         }
     }

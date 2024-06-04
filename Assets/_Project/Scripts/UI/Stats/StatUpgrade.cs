@@ -52,8 +52,10 @@ namespace BadJuja.UI {
         public void Clicked()
         {
             if (upgradeScreen == null) return;
-
-            upgradeScreen.ApplyModifier(Stat, ModType, Strenght);
+            if (Stat == AllCharacterStats.MovementSpeed)
+                upgradeScreen.ApplyModifier(Stat, StatModType.PercentAdd, Strenght / 100);
+            else
+                upgradeScreen.ApplyModifier(Stat, ModType, Strenght);
         }
 
         private void UpdateDescription()

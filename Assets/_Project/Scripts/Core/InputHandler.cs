@@ -24,8 +24,8 @@ namespace BadJuja.Core {
             _switchToLightAction = _playerInput.actions["SwitchToLight"];
             _switchToHeavyAction = _playerInput.actions["SwitchToHeavy"];
             _pauseMenuAction = _playerInput.actions["PauseMenu"];
-            
-            _pauseMenuAction.performed += ctx => GameRelatedEvents.Send_OnPause();
+
+            EnablePauseAction();
 
             Enable();
         }
@@ -58,6 +58,16 @@ namespace BadJuja.Core {
             _playerInput.actions["DEV.AddLevel"].performed -= ctx => PlayerRelatedEvents.OnLevelIncrease();
 
             IsEnabled = false;
+        }
+
+        public void DisablePauseAction()
+        {
+            _pauseMenuAction.performed -= ctx => GameRelatedEvents.Send_OnPause();
+        }
+
+        public void EnablePauseAction()
+        {
+            _pauseMenuAction.performed += ctx => GameRelatedEvents.Send_OnPause();
         }
     }
 }

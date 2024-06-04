@@ -7,53 +7,29 @@ using BadJuja.Core.Data;
 namespace BadJuja.Player {
     public class Player : MonoBehaviour, IDamagable, IStats {
 
-        [Header("General")]
-        public float StatCheckDelay = 1f;
-
         [Header("Stats")]
         [SerializeField] private CharacterStatStructure _stats = new();
-
-        float IStats.GetStatValue(AllCharacterStats stat) => _stats.GetStatValue(stat);
-        float IStats.GetElementalResistance(WeaponElements damageElement) => _stats.GetElementalResistance(damageElement);
-        float IStats.GetElementalBonus(WeaponElements damageElement) => _stats.GetElementalBonus(damageElement);
-
         private float _lastMaxHealth;
         private float _currentHealth = 0;
 
-        #region Experience
-
-        private int _level = 1;
-        private int _currentExperience = 0;
-        private int _baseXpForLevel = 100;
-        private float _xpForLevelMult = 1.25f;
-
-        private int XpToNextLevel {
-            get {
-                return (int)(_level * _baseXpForLevel * _xpForLevelMult);
-            }
-        }
-        private void AddExperience(int xpValue)
+        float IStats.GetStatValue(AllCharacterStats stat)
         {
-            _currentExperience += xpValue;
-            if (_currentExperience >= XpToNextLevel)
-            {
-                _currentExperience -= XpToNextLevel;
-                _level++;
-                PlayerRelatedEvents.Send_OnLevelIncreased();
-            }
-            
-            PlayerRelatedEvents.Send_OnExperienceChanged(_currentExperience, XpToNextLevel);
+            return _stats.GetStatValue(stat);
         }
 
-        #endregion
-        private void OnDestroy()
+        float IStats.GetElementalResistance(WeaponElements damageElement)
         {
-            UnsubscribeFromEvents();
+            return _stats.GetElementalResistance(damageElement);
+        }
+
+        float IStats.GetElementalBonus(WeaponElements damageElement)
+        {
+            return _stats.GetElementalBonus(damageElement);
         }
 
         public void Initialize(PlayerCurrentEquipment playerCurrentEquipment)
         {
-            _stats.Init();
+            _stats.Initialize();
 
             _currentHealth = _stats.GetStatValue(AllCharacterStats.Health);
             _lastMaxHealth = _currentHealth;
@@ -64,7 +40,8 @@ namespace BadJuja.Player {
                 ApplyStatMod(mod.Stat, new(mod.Strenght, mod.ModType, this));
             }
 
-            SubscribeToEvents();
+            ModifiersRelaterEvents.ApplyModifierToPlayer += ApplyStatMod;
+            ModifiersRelaterEvents.RemovePlayerModifier += RemoveStatMod;
         }
 
         private void Start()
@@ -72,22 +49,8 @@ namespace BadJuja.Player {
             PlayerRelatedEvents.Send_OnHealthChanged(_currentHealth, _lastMaxHealth);
         }
 
-        public Visuals.Model InstantiateModel(GameObject model)
+        private void OnDestroy()
         {
-            var go = Instantiate(model, transform, false);
-            return go.GetComponent<Visuals.Model>();
-        }
-
-        private void SubscribeToEvents()
-        {
-            EnemyRelatedEvents.OnEnemyDied += AddExperience;
-            ModifiersRelaterEvents.ApplyModifierToPlayer += ApplyStatMod;
-            ModifiersRelaterEvents.RemovePlayerModifier += RemoveStatMod;
-        }
-
-        private void UnsubscribeFromEvents()
-        {
-            EnemyRelatedEvents.OnEnemyDied -= AddExperience;
             ModifiersRelaterEvents.ApplyModifierToPlayer -= ApplyStatMod;
             ModifiersRelaterEvents.RemovePlayerModifier -= RemoveStatMod;
         }
@@ -131,19 +94,16 @@ namespace BadJuja.Player {
                 else
                     mod = new(mod.Value / 100, StatModType.PercentAdd, mod.Source);
             }
-
             _stats.ApplyMod(stat, mod);
 
-            if (stat == AllCharacterStats.Health)
-                PlayerStatsCheck();
+            PlayerStatsCheck();
         }
 
         private void RemoveStatMod(AllCharacterStats stat, object source)
         {
             _stats.RemoveMod(stat, source);
 
-            if (stat == AllCharacterStats.Health)
-                PlayerStatsCheck();
+            PlayerStatsCheck();
         }
 
         private void PlayerStatsCheck()
@@ -153,13 +113,9 @@ namespace BadJuja.Player {
                 float difference = _stats.GetStatValue(AllCharacterStats.Health) - _lastMaxHealth;
                 _lastMaxHealth += difference;
                 if (_currentHealth + difference <= 0)
-                {
                     _currentHealth = 1f;
-                }
                 else
-                {
                     _currentHealth += difference;
-                }
                 PlayerRelatedEvents.Send_OnHealthChanged(_currentHealth, _stats.GetStatValue(AllCharacterStats.Health));
             }
         }

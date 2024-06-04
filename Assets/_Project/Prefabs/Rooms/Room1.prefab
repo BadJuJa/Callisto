@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8639b7d8eb0061743b92306431ea486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraConfinderCollider: {fileID: 6482750011704499275}
+  _cameraConfinder: {fileID: 6482750011704499275}
   _enemyPrefab: {fileID: 5557279390079599381, guid: 904e7fc4e1f0b7f49ba88f7392d102aa,
     type: 3}
   _playerSpawnPoint: {fileID: 3789281494343643172}

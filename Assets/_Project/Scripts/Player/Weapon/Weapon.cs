@@ -26,7 +26,7 @@ namespace BadJuja.Player.Weapons
             targetDamagable.TakeDamage(finalDamage, _element);
         }
 
-        private float GetPlayerElementalBonus() => _playerStats.GetElementalBonus(_element) / 100;
+        private float GetElementalBonus() => _playerStats.GetElementalBonus(_element) / 100;
 
         private float GetCritMult()
         {
@@ -37,7 +37,7 @@ namespace BadJuja.Player.Weapons
         
         private float GetFinalDamage()
         {
-            float elementalMult = GetPlayerElementalBonus();
+            float elementalMult = GetElementalBonus();
             float critMult = GetCritMult();
 
             return Damage * (1 + elementalMult) * critMult;

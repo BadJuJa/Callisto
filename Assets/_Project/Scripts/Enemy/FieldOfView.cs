@@ -4,20 +4,18 @@ using System.Collections.Generic;
 
 namespace BadJuja.Enemy {
     public class FieldOfView {
+        private Transform _ownerTransform;
+        private MonoBehaviour _context;
 
         private float _viewAngle = 20;
+        private float _updateDelay = .2f;
+        private float _reachDistance;
 
         private LayerMask _targetMask;
         private LayerMask _obstacleMask;
 
-        private float _updateDelay = .2f;
-
-        private float _reachDistance;
         private List<Transform> _visibleTargets = new();
         private Collider[] _targetsInReachDistance;
-
-        private Transform _ownerTransform;
-        private MonoBehaviour _context;
 
         public bool PlayerInReachDistance { get; private set; } = false;
 
@@ -67,16 +65,6 @@ namespace BadJuja.Enemy {
             }
 
             PlayerInReachDistance = _visibleTargets.Count > 0;
-        }
-
-
-        public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
-        {
-            if (!angleIsGlobal)
-            {
-                angleInDegrees += _ownerTransform.eulerAngles.y;
-            }
-            return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
         }
     }
 }

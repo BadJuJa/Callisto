@@ -10,7 +10,12 @@ namespace BadJuja.LevelManagement {
 
         private void Awake()
         {
-            animator = GetComponent<Animator>();
+            if (animator == null) animator = GetComponent<Animator>();
+        }
+
+        private void Update()
+        {
+            if (animator == null) animator = GetComponent<Animator>();
         }
 
         private void OnEnable()
@@ -19,10 +24,10 @@ namespace BadJuja.LevelManagement {
             LevelLoadingRelatedEvents.OnScreenFadeOutStarted += FadeOut;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            LevelLoadingRelatedEvents.OnScreenFadeInStarted += FadeIn;
-            LevelLoadingRelatedEvents.OnScreenFadeOutStarted += FadeOut;
+            LevelLoadingRelatedEvents.OnScreenFadeInStarted -= FadeIn;
+            LevelLoadingRelatedEvents.OnScreenFadeOutStarted -= FadeOut;
         }
 
         private void FadeIn()
@@ -34,6 +39,16 @@ namespace BadJuja.LevelManagement {
         {
             animator.speed = 1 / TimeToFadeOut;
             animator.SetTrigger("FadeOut");
+        }
+
+        public void SendFadedIn()
+        {
+            LevelLoadingRelatedEvents.Send_OnScreenFadeInFinished();
+        }
+        
+        public void SendFadedOut()
+        {
+            LevelLoadingRelatedEvents.Send_OnScreenFadeOutFinished();
         }
 
     }
